@@ -322,6 +322,12 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   max-width:46rem;
   margin: 0 auto 1.2rem;
   text-wrap:pretty;
+  /* Reserve vertical space so the language toggle doesn't shift layout
+     when the EN translation wraps to more lines than CS. */
+  min-height:calc(1.55em * 3);
+}
+@media (max-width:560px){
+  .pull-text{ min-height:calc(1.55em * 4); }
 }
 .pull-author{
   font-family:"DM Mono", monospace;
