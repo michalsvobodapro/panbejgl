@@ -255,9 +255,13 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   max-width:46rem;
   line-height:1.4;
   text-wrap:balance;
-  /* Reserve 2 lines of vertical space so language toggle doesn't shift layout
-     when text wraps differently on narrow viewports. */
+  /* Reserve enough vertical space so language toggle doesn't shift layout
+     when text wraps differently. 2 lines on desktop, 3 on narrow mobile
+     in case the longer translation wraps more aggressively. */
   min-height:calc(1.4em * 2);
+}
+@media (max-width:560px){
+  .hero-tagline{ min-height:calc(1.4em * 3); }
 }
 .hero-subtitle{
   margin-top:.6rem;
