@@ -8,7 +8,7 @@ const I18N = {
   cs: {
     "brand.sub": "Bistró Kafe — Praha 2",
     "nav.about": "O nás", "nav.menu": "Menu", "nav.hours": "Otevřeno", "nav.visit": "Najdete nás",
-    "hero.eyebrow": "EST · BLANICKÁ · PRAHA 2",
+    "hero.eyebrow": "BLANICKÁ · PRAHA 2 · VINOHRADY",
     "meta.address": "Adresa", "meta.today": "Dnes", "meta.serving": "Podáváme", "meta.coffee": "Káva",
     "meta.serving.val": "Snídaně & oběd", "meta.coffee.val": "Bio · Fair Trade",
     "gallery.title.em": "Z naší", "gallery.title": "vitríny",
@@ -35,7 +35,7 @@ const I18N = {
   en: {
     "brand.sub": "Bistro Café — Prague 2",
     "nav.about": "About", "nav.menu": "Menu", "nav.hours": "Hours", "nav.visit": "Visit",
-    "hero.eyebrow": "EST · BLANICKÁ · PRAGUE 2",
+    "hero.eyebrow": "BLANICKÁ · PRAGUE 2 · VINOHRADY",
     "meta.address": "Address", "meta.today": "Today", "meta.serving": "Serving", "meta.coffee": "Coffee",
     "meta.serving.val": "Breakfast & lunch", "meta.coffee.val": "Organic · Fair Trade",
     "gallery.title.em": "From the", "gallery.title": "counter",
