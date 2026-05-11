@@ -1,0 +1,57 @@
+SETUP NA ZÍTRA — návštěva u Pan Bejgl
+======================================
+
+Live URL pro ukázku Janě:
+  https://michalsvobodapro.github.io/panbejgl/
+
+Lokální preview:
+  tools/preview.sh
+  → Otevře localhost:8123 v prohlížeči, server běží na pozadí.
+
+NEJČASTĚJŠÍ ÚKOLY
+-----------------
+
+1) Vyměnit fotku v galerii
+   Krok A — kompresnout a uložit fotku:
+     tools/photo.sh add ~/path/to/photo.jpg <slug> "Caption"
+     # např.: tools/photo.sh add ~/Downloads/IMG_0001.jpg novy-bagel "Nový bejgl"
+     # → uloží jako images/novy-bagel.jpg + přidá do gallery v content.json
+
+   Krok B — pokud chceš nahradit existující slot místo přidání:
+     1. Otevři content.json, najdi sekci "gallery"
+     2. V některém { "src": ..., "caption": ... } přepiš src/caption
+        Pak smaž starý kus pole.
+
+2) Upravit text / ceny / kontakt
+   Otevři content.json — všechno tam je. Save → refresh prohlížeče.
+
+3) Upravit otevírací dobu
+   content.json → "hours" → změň den, formát "HH:MM-HH:MM" nebo "closed"
+
+4) Publikovat změny
+   tools/publish.sh "Krátký popis co se změnilo"
+   → committuje vše, pushne na GitHub, GH Pages se přestaví za ~1 min
+
+JINÉ TIPY
+---------
+- Kdyby content.json bylo rozbité (neuložila se závorka), publish.sh zařve a nepushne. Tak se nedá nic rozbít online.
+- Po publish.sh vidíš výsledek na live URL za ~30-60s. Někdy potřeba hard refresh mobilu (?v=2 v URL).
+- Když se něco pokazí, vrať se commitem zpět: git log --oneline; git revert <hash>
+- Logo a interier hero photo jsou hardcoded v shop.logo / shop.hero_image v content.json (klíče "shop").
+
+DOMÉNA panbejgl.cz
+------------------
+Až bude Jana spokojená, pošli Robertovi tohle (od Českého hostingu):
+
+  Přidat 4 DNS A záznamy pro panbejgl.cz:
+    A    @    185.199.108.153
+    A    @    185.199.109.153
+    A    @    185.199.110.153
+    A    @    185.199.111.153
+  Plus CNAME:
+    CNAME   www   michalsvobodapro.github.io.
+
+Pak dej vědět a tady:
+  1. Vytvořit soubor CNAME v repu s jedním řádkem: panbejgl.cz
+  2. tools/publish.sh "Add CNAME for panbejgl.cz"
+  3. Na GitHub Pages settings vypnout/zapnout Enforce HTTPS až DNS propaguje
