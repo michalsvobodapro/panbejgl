@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.vscode/
+.idea/
+*.log
+
+# Claude Design handoff bundle (chat transcripts + dup assets) — not needed in live repo
+_handoff/

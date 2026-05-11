@@ -1,0 +1,113 @@
+{
+  "shop": {
+    "name": "Pan Bejgl",
+    "full_name": "Pan Bejgl Bistró Kafe",
+    "address_line1": "Blanická 772/6",
+    "address_line2": "120 00 Praha 2 – Vinohrady",
+    "phone": "+420 733 733 519",
+    "email": "jana-sookol@seznam.cz",
+    "instagram": "https://www.instagram.com/panbejgl_praha/",
+    "facebook": "https://www.facebook.com/profile.php?id=61589282129142",
+    "map_embed_src": "https://maps.google.com/maps?q=Pan+Bejgl+Bistr%C3%B3+Kafe+Blanick%C3%A1+Praha&z=17&output=embed",
+    "map_link": "https://www.google.com/maps/place/Pan+Bejgl+Bistr%C3%B3+Kafe/@50.0745603,14.439286,17z",
+    "logo": "images/logo.jpg",
+    "hero_image": "images/interier.jpg"
+  },
+  "hours": {
+    "mon": "07:00-19:00",
+    "tue": "07:00-19:00",
+    "wed": "07:00-19:00",
+    "thu": "07:00-19:00",
+    "fri": "07:00-19:00",
+    "sat": "08:00-15:00",
+    "sun": "closed"
+  },
+  "tagline": {
+    "cs": "Bio káva, čerstvé bejgly a domácí bábovky",
+    "en": "Organic coffee, fresh bagels & homemade bundt cakes"
+  },
+  "subtitle": {
+    "cs": "káva a snídaně na Vinohradech",
+    "en": "coffee & breakfast in Vinohrady"
+  },
+  "about": {
+    "cs": "Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a domácí polévky. Po–So jsme tu pro vaše lepší rána.",
+    "en": "A small bakery and coffee bar on Blanická street. We bake fresh bagels, brew organic coffee, and cook homemade soups. Mon–Sat we're here for your better mornings."
+  },
+  "menu": [
+    {
+      "category": { "cs": "Snídaňové bejgly", "en": "Breakfast bagels" },
+      "items": [
+        { "name": { "cs": "Snídaňový speciál", "en": "Breakfast special" }, "price": "155 Kč", "desc": { "cs": "vejce, slanina, čedar", "en": "egg, bacon, cheddar" } },
+        { "name": { "cs": "Vajíčkový poctivec", "en": "Egg classic" }, "price": "85 Kč", "desc": { "cs": "vaječná pomazánka, polníček", "en": "egg spread, lamb's lettuce" } },
+        { "name": { "cs": "Šunka & sýr", "en": "Ham & cheese" }, "price": "95 Kč", "desc": { "cs": "", "en": "" } },
+        { "name": { "cs": "Tuňákový", "en": "Tuna" }, "price": "129 Kč", "desc": { "cs": "tuňáková pomazánka, salát", "en": "tuna spread, salad" } }
+      ]
+    },
+    {
+      "category": { "cs": "Obědové bejgly", "en": "Lunch bagels" },
+      "items": [
+        { "name": { "cs": "Kuřecí s avokádem", "en": "Chicken & avocado" }, "price": "149 Kč", "desc": { "cs": "grilované kuře, avokádo", "en": "grilled chicken, avocado" } },
+        { "name": { "cs": "BBQ trhačka", "en": "BBQ pulled pork" }, "price": "139 Kč", "desc": { "cs": "trhané vepřové, BBQ omáčka, sýr", "en": "pulled pork, BBQ sauce, cheese" } },
+        { "name": { "cs": "Losos speciál", "en": "Salmon special" }, "price": "185 Kč", "desc": { "cs": "uzený losos, krém fresh, kopr", "en": "smoked salmon, crème fraîche, dill" } }
+      ]
+    },
+    {
+      "category": { "cs": "Saláty", "en": "Salads" },
+      "items": [
+        { "name": { "cs": "Caesar Classic", "en": "Caesar Classic" }, "price": "119 Kč", "desc": { "cs": "parmazán, krutony, dresink", "en": "parmesan, croutons, dressing" } },
+        { "name": { "cs": "Caesar s kuřetem", "en": "Caesar with chicken" }, "price": "169 Kč", "desc": { "cs": "klasika s grilovaným kuřetem", "en": "classic with grilled chicken" } },
+        { "name": { "cs": "Caesar s lososem", "en": "Caesar with salmon" }, "price": "195 Kč", "desc": { "cs": "varianta s uzeným lososem", "en": "with smoked salmon" } }
+      ]
+    },
+    {
+      "category": { "cs": "Misky & polévky", "en": "Bowls & soups" },
+      "items": [
+        { "name": { "cs": "Ovesná kaše", "en": "Oatmeal" }, "price": "79 Kč", "desc": { "cs": "sirup, ovoce, oříšky", "en": "syrup, fruit, nuts" } },
+        { "name": { "cs": "Jogurt s granolou", "en": "Yogurt & granola" }, "price": "69 Kč", "desc": { "cs": "jogurt, ovoce, ořechy", "en": "yogurt, fruit, nuts" } },
+        { "name": { "cs": "Polévka dne", "en": "Soup of the day" }, "price": "65 Kč", "desc": { "cs": "ptejte se obsluhy", "en": "ask at the counter" } }
+      ]
+    },
+    {
+      "category": { "cs": "Něco sladkého", "en": "Something sweet" },
+      "items": [
+        { "name": { "cs": "Domácí bábovka", "en": "Homemade bundt cake" }, "price": "50 Kč", "desc": { "cs": "naše specialita", "en": "our specialty" } },
+        { "name": { "cs": "Koláč dne", "en": "Cake of the day" }, "price": "59 Kč", "desc": { "cs": "dle denní nabídky", "en": "see daily offering" } }
+      ]
+    },
+    {
+      "category": { "cs": "Káva & nápoje", "en": "Coffee & drinks" },
+      "items": [
+        { "name": { "cs": "Espresso / Ristretto / Lungo", "en": "Espresso / Ristretto / Lungo" }, "price": "55 Kč", "desc": { "cs": "bio Fair Trade káva", "en": "organic Fair Trade coffee" } },
+        { "name": { "cs": "Cappuccino", "en": "Cappuccino" }, "price": "65 Kč", "desc": { "cs": "", "en": "" } },
+        { "name": { "cs": "Flat White", "en": "Flat White" }, "price": "75 Kč", "desc": { "cs": "", "en": "" } },
+        { "name": { "cs": "Caffè Latte", "en": "Caffè Latte" }, "price": "75 Kč", "desc": { "cs": "", "en": "" } },
+        { "name": { "cs": "Matcha Latte", "en": "Matcha Latte" }, "price": "89 Kč", "desc": { "cs": "s našlehaným mlékem", "en": "with steamed milk" } },
+        { "name": { "cs": "Čerstvé smoothie", "en": "Fresh smoothie" }, "price": "89 Kč", "desc": { "cs": "", "en": "" } },
+        { "name": { "cs": "Coca-Cola / Fanta / Monster", "en": "Coca-Cola / Fanta / Monster" }, "price": "49 Kč", "desc": { "cs": "", "en": "" } }
+      ]
+    },
+    {
+      "category": { "cs": "Výhodná menu", "en": "Deals" },
+      "items": [
+        { "name": { "cs": "Bejgl + káva", "en": "Bagel + coffee" }, "price": "−20 Kč", "desc": { "cs": "kombo: jakýkoliv bejgl a káva", "en": "combo: any bagel and any coffee" } },
+        { "name": { "cs": "Vlastní hrneček", "en": "Bring your own cup" }, "price": "−5 Kč", "desc": { "cs": "sleva na nápoj do vlastního hrnečku", "en": "discount on drinks in your own cup" } },
+        { "name": { "cs": "Studentský speciál", "en": "Student special" }, "price": "ISIC", "desc": { "cs": "studentská sleva — zeptej se obsluhy", "en": "student discount — ask at the counter" } }
+      ]
+    }
+  ],
+  "photos": [
+    "images/bagel-7.jpg",
+    "images/babovka-1.jpg",
+    "images/bagel-1.jpg",
+    "images/chleba-1.jpg",
+    "images/bagel-4.jpg",
+    "images/pecivo-1.jpg",
+    "images/polevka-1.jpg",
+    "images/bagel-5.jpg",
+    "images/chleba-2.jpg",
+    "images/bagel-8.jpg",
+    "images/babovka-2.jpg",
+    "images/bagel-6.jpg"
+  ]
+}
