@@ -211,6 +211,16 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   display:inline-flex;align-items:center;gap:1rem;
 }
 .hero-eyebrow .line{width:36px;height:1px;background:var(--gold-light);opacity:.6}
+@media (max-width:560px){
+  .hero-eyebrow{
+    display:block;
+    text-align:center;
+    letter-spacing:.22em;
+    font-size:.72rem;
+    white-space:nowrap;
+  }
+  .hero-eyebrow .line{display:none;}
+}
 .hero-logo{
   width:clamp(98px, 14vw, 130px);
   height:clamp(98px, 14vw, 130px);
