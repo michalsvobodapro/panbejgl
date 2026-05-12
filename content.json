@@ -35,18 +35,17 @@
     "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Mon–Sat for better mornings."
   },
   "gallery": [
-    { "src": "images/bagel-7.jpg",    "caption": "Sezamový bejgl" },
-    { "src": "images/babovka-1.jpg",  "caption": "Bábovka" },
-    { "src": "images/bagel-1.jpg",    "caption": "Bejgl s lososem" },
-    { "src": "images/chleba-1.jpg",   "caption": "Domácí chleba" },
-    { "src": "images/bagel-4.jpg",    "caption": "Snídaňový speciál" },
-    { "src": "images/pecivo-1.jpg",   "caption": "Drobné pečivo" },
-    { "src": "images/polevka-1.jpg",  "caption": "Polévka dne" },
-    { "src": "images/bagel-5.jpg",    "caption": "Caesar bejgl" },
-    { "src": "images/chleba-2.jpg",   "caption": "Kváskový chleba" },
-    { "src": "images/bagel-8.jpg",    "caption": "Tuňákový bejgl" },
-    { "src": "images/babovka-2.jpg",  "caption": "Sladká nabídka" },
-    { "src": "images/bagel-6.jpg",    "caption": "BBQ trhačka" }
+    { "src": "images/bagel-snidanovy.jpg",       "caption": "Snídaňový speciál" },
+    { "src": "images/bagel-vajicko.jpg",         "caption": "Vajíčkový poctivec" },
+    { "src": "images/bagel-sunka-syr.jpg",       "caption": "Šunka & sýr" },
+    { "src": "images/bagel-tunak.jpg",           "caption": "Tuňákový bejgl" },
+    { "src": "images/bagel-kure-avokado.jpg",    "caption": "Kuřecí s avokádem" },
+    { "src": "images/bagel-bbq.jpg",             "caption": "BBQ trhačka" },
+    { "src": "images/bagel-hovezi-chipotle.jpg", "caption": "Hovězí s chipotle" },
+    { "src": "images/caesar-kure.jpg",           "caption": "Caesar s kuřetem" },
+    { "src": "images/caesar-losos.jpg",          "caption": "Caesar s lososem" },
+    { "src": "images/kase-ovesna.jpg",           "caption": "Ovesná kaše" },
+    { "src": "images/polevka-gulas.jpg",         "caption": "Polévka dne" }
   ],
   "menu": [
     {
@@ -111,17 +110,16 @@
     }
   ],
   "photos": [
-    "images/bagel-7.jpg",
-    "images/babovka-1.jpg",
-    "images/bagel-1.jpg",
-    "images/chleba-1.jpg",
-    "images/bagel-4.jpg",
-    "images/pecivo-1.jpg",
-    "images/polevka-1.jpg",
-    "images/bagel-5.jpg",
-    "images/chleba-2.jpg",
-    "images/bagel-8.jpg",
-    "images/babovka-2.jpg",
-    "images/bagel-6.jpg"
+    "images/bagel-snidanovy.jpg",
+    "images/bagel-vajicko.jpg",
+    "images/bagel-sunka-syr.jpg",
+    "images/bagel-tunak.jpg",
+    "images/bagel-kure-avokado.jpg",
+    "images/bagel-bbq.jpg",
+    "images/bagel-hovezi-chipotle.jpg",
+    "images/caesar-kure.jpg",
+    "images/caesar-losos.jpg",
+    "images/kase-ovesna.jpg",
+    "images/polevka-gulas.jpg"
   ]
 }
