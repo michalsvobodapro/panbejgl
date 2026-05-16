@@ -27,7 +27,12 @@ const I18N = {
     "footer.tag": "Pečeno na Vinohradech",
     "status.open": "Otevřeno",
     "status.closed": "Zavřeno",
-    "status.opens_at": "Otevírá v {time}",
+    "status.opens_at": "Otevírá {time}",
+    "status.opens_at_full": "Otevírá v {time}",
+    "social.nav": "Sociální sítě a objednávky",
+    "social.instagram": "Instagram",
+    "social.facebook": "Facebook",
+    "social.bolt": "Objednat na Bolt Food",
     "closed": "Zavřeno",
     "day.mon": "Pondělí", "day.tue": "Úterý", "day.wed": "Středa", "day.thu": "Čtvrtek",
     "day.fri": "Pátek", "day.sat": "Sobota", "day.sun": "Neděle",
@@ -54,7 +59,12 @@ const I18N = {
     "footer.tag": "Baked in Vinohrady",
     "status.open": "Open now",
     "status.closed": "Closed",
-    "status.opens_at": "Opens at {time}",
+    "status.opens_at": "Opens {time}",
+    "status.opens_at_full": "Opens at {time}",
+    "social.nav": "Social & ordering",
+    "social.instagram": "Instagram",
+    "social.facebook": "Facebook",
+    "social.bolt": "Order on Bolt Food",
     "closed": "Closed",
     "day.mon": "Monday", "day.tue": "Tuesday", "day.wed": "Wednesday", "day.thu": "Thursday",
     "day.fri": "Friday", "day.sat": "Saturday", "day.sun": "Sunday",
@@ -120,14 +130,18 @@ function renderStatic() {
   pill.classList.remove("is-open", "is-closed");
   if (s.open) {
     txt.textContent = t("status.open");
+    pill.title = t("status.open");
     pill.classList.add("is-open");
   } else if (s.opensAt) {
     txt.textContent = t("status.opens_at", { time: s.opensAt });
+    pill.title = t("status.opens_at_full", { time: s.opensAt });
     pill.classList.add("is-closed");
   } else {
     txt.textContent = t("status.closed");
+    pill.title = t("status.closed");
     pill.classList.add("is-closed");
   }
+  pill.setAttribute("aria-label", pill.title);
 }
 
 function renderShop() {
@@ -168,6 +182,31 @@ function renderShop() {
   if (shop.facebook) {
     document.getElementById("visit-fb").href = shop.facebook;
   }
+
+  // Social/delivery icons — wires every [data-social] link (header + footer
+  // copies) from one map. Each shows only when its URL is set, so Bolt Food
+  // stays hidden until shop.bolt_food is filled in content.json.
+  const social = {
+    instagram: [shop.instagram, "social.instagram"],
+    facebook: [shop.facebook, "social.facebook"],
+    bolt: [shop.bolt_food, "social.bolt"],
+  };
+  document.querySelectorAll("[data-social]").forEach((el) => {
+    const entry = social[el.dataset.social];
+    if (!entry) return;
+    const [url, labelKey] = entry;
+    el.setAttribute("aria-label", t(labelKey));
+    if (url) {
+      el.href = url;
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
+  });
+  document.querySelectorAll(".footer-social, .header-social").forEach((nav) => {
+    nav.setAttribute("aria-label", t("social.nav"));
+  });
+
   if (shop.map_embed_src) {
     document.getElementById("map-iframe").src = shop.map_embed_src;
   }
