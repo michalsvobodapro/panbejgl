@@ -183,7 +183,7 @@ function renderShop() {
     document.getElementById("visit-fb").href = shop.facebook;
   }
 
-  // Social/delivery icons — wires every [data-social] link (header + footer
+  // Social/delivery icons — wires every [data-social] link (hero + footer
   // copies) from one map. Each shows only when its URL is set, so Bolt Food
   // stays hidden until shop.bolt_food is filled in content.json.
   const social = {
@@ -203,7 +203,7 @@ function renderShop() {
       el.hidden = true;
     }
   });
-  document.querySelectorAll(".footer-social, .header-social").forEach((nav) => {
+  document.querySelectorAll(".footer-social, .hero-social").forEach((nav) => {
     nav.setAttribute("aria-label", t("social.nav"));
   });
 
