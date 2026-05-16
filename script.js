@@ -151,7 +151,9 @@ function renderShop() {
     document.getElementById("brand-logo").src = shop.logo;
     document.getElementById("hero-logo").src = shop.logo;
     document.getElementById("footer-logo").src = shop.logo;
-    document.querySelector("link[rel='icon']").href = shop.logo;
+    // NOTE: the favicon is intentionally NOT set from shop.logo. The
+    // declared /favicon.ico + favicon.png (square, crawler-friendly)
+    // must stay authoritative for search-result site icons.
   }
   if (shop.hero_image) {
     document.getElementById("hero-bg").style.backgroundImage = `url("${shop.hero_image}")`;
@@ -337,6 +339,9 @@ function injectSchema() {
     "@context": "https://schema.org",
     "@type": "Bakery",
     name: s.full_name || s.name,
+    url: "https://panbejgl.cz/",
+    image: "https://panbejgl.cz/images/bagel-snidanovy.jpg",
+    logo: "https://panbejgl.cz/images/favicon.png",
     address: {
       "@type": "PostalAddress",
       streetAddress: s.address_line1,
