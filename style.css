@@ -653,6 +653,7 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
 }
 
 /* ========== CATERING ========== */
+#catering .section-head .kicker{ display:block; }   /* the shared menu class hides .kicker; catering shows its subtitle */
 .catering-intro{ max-width:40rem; margin:0 auto 2.6rem; text-align:center;
   font-family:"Playfair Display",serif; font-style:italic; color:var(--ink-soft);
   font-size:1.02rem; line-height:1.6; }
