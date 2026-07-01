@@ -4,6 +4,8 @@
     "full_name": "Pan Bejgl Bistró Kafe",
     "address_line1": "Blanická 772/6",
     "address_line2": "120 00 Praha 2 – Vinohrady",
+    "city": "Praha",
+    "postal_code": "120 00",
     "phone": "+420 733 733 519",
     "email": "jana-sookol@seznam.cz",
     "instagram": "https://www.instagram.com/panbejgl_praha/",
@@ -110,17 +112,56 @@
       ]
     }
   ],
-  "photos": [
-    "images/bagel-snidanovy.jpg",
-    "images/bagel-vajicko.jpg",
-    "images/bagel-sunka-syr.jpg",
-    "images/bagel-tunak.jpg",
-    "images/bagel-kure-avokado.jpg",
-    "images/bagel-bbq.jpg",
-    "images/bagel-hovezi-chipotle.jpg",
-    "images/caesar-kure.jpg",
-    "images/caesar-losos.jpg",
-    "images/kase-ovesna.jpg",
-    "images/polevka-gulas.jpg"
-  ]
+  "catering": {
+    "intro": {
+      "cs": "Chystáte firemní akci, svatbu, narozeniny nebo jen chcete pohoštění do kanceláře, na které se nezapomene? Připravíme pro vás catering na míru — od našich vyhlášených bejglů a čerstvých jednohubek až po sladké tečky, vše s láskou a poctivými surovinami.",
+      "en": "Planning a corporate event, a wedding, a birthday, or just want office refreshments no one will forget? We'll prepare bespoke catering for you — from our famous bagels and fresh canapés to sweet finishing touches, all made with love and honest ingredients."
+    },
+    "groups": [
+      {
+        "category": { "cs": "Bejglové boxy", "en": "Bagel boxes" },
+        "desc": { "cs": "Výběr našich nejlepších bejglů.", "en": "A selection of our best bagels." },
+        "items": [
+          { "name": { "cs": "Vajíčkový", "en": "Egg" } },
+          { "name": { "cs": "Tuňákový", "en": "Tuna" } },
+          { "name": { "cs": "S mozzarellou", "en": "With mozzarella" } },
+          { "name": { "cs": "Reuben s pastrami a zelím", "en": "Reuben with pastrami & sauerkraut" } },
+          { "name": { "cs": "S lososem", "en": "With salmon" } }
+        ]
+      },
+      {
+        "category": { "cs": "Kanapky a jednohubky", "en": "Canapés & finger food" },
+        "desc": { "cs": "Slané jednohubky připravené čerstvě pro vaši akci.", "en": "Savoury canapés made fresh for your event." },
+        "items": [
+          { "name": { "cs": "Losos na bylinkové blině", "en": "Salmon on a herb blini" } },
+          { "name": { "cs": "Rostbíf s bramborovým salátem", "en": "Roast beef with potato salad" } },
+          { "name": { "cs": "Kozí sýr s fíky", "en": "Goat cheese with figs" } },
+          { "name": { "cs": "Pečené grenaille s ratatouille", "en": "Roasted grenaille potatoes with ratatouille" } },
+          { "name": { "cs": "Hovězí tatarák", "en": "Beef tartare" } },
+          { "name": { "cs": "Lilkové rolky s česnekovým sýrem", "en": "Eggplant rolls with garlic cheese" } },
+          { "name": { "cs": "Mini caprese", "en": "Mini caprese" } },
+          { "name": { "cs": "Škvarková pomazánka", "en": "Pork-crackling spread" } },
+          { "name": { "cs": "Krevetkové ceviche s avokádovou pěnou", "en": "Shrimp ceviche with avocado foam" } }
+        ]
+      },
+      {
+        "category": { "cs": "Coffee-break boxy", "en": "Coffee-break boxes" },
+        "desc": { "cs": "Ideální sladké pohoštění ke kávě — boxy plné našich poctivých muffinů, které skvěle doplní váš kávový servis.", "en": "The ideal sweet treat with coffee — boxes full of our honest muffins to complement your coffee service." },
+        "items": [
+          { "name": { "cs": "Ovocné muffiny", "en": "Fruit muffins" } },
+          { "name": { "cs": "Čokoládové muffiny", "en": "Chocolate muffins" } },
+          { "name": { "cs": "Další variace", "en": "More variations" } }
+        ]
+      }
+    ],
+    "ordering": [
+      { "label": { "cs": "Objednávka", "en": "Ordering" },
+        "text": { "cs": "Objednávejte prosím alespoň 48 hodin předem.", "en": "Please order at least 48 hours in advance." } },
+      { "label": { "cs": "Rozvoz po Praze", "en": "Delivery in Prague" },
+        "text": { "cs": "Vinohrady a okolí — při objednávce nad 2 000 Kč zdarma, jinak dle individuální domluvy.", "en": "Vinohrady and nearby — free over 2,000 CZK, otherwise by individual arrangement." } },
+      { "label": { "cs": "Catering na míru", "en": "Bespoke catering" },
+        "text": { "cs": "Plánujete svatbu nebo firemní večírek? Rádi vše probereme osobně.", "en": "Planning a wedding or company party? We'll happily discuss everything in person." } }
+    ],
+    "cta": { "cs": "Zavolejte: 733 733 519", "en": "Call us: 733 733 519" }
+  }
 }

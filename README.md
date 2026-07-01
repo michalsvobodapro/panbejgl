@@ -9,7 +9,7 @@ Plain HTML + CSS + vanilla JS. No build step. Hosted on GitHub Pages.
 
 - Hours: format is `"HH:MM-HH:MM"` (24h) or `"closed"`.
 - Menu prices: just text — `"55 Kč"`, `"od 65 Kč"`, etc.
-- Photos: put files into `images/` and reference them in the `photos` array.
+- Photos: put files into `images/` and reference them in the `gallery` array.
 - Each piece of copy has a `cs` (Czech) and `en` (English) field.
 
 You **don't need to touch** `index.html`, `style.css`, or `script.js` for normal updates.
@@ -19,20 +19,18 @@ You **don't need to touch** `index.html`, `style.css`, or `script.js` for normal
 The site loads `content.json` over HTTP, so opening `index.html` directly with `file://` won't work. Serve it locally:
 
 ```bash
-cd ~/claude/panbejgl
+cd ~/dev/projects/panbejgl
 python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-## Before going live (checklist)
+## Editing notes
 
-The site has `<meta name="robots" content="noindex">` until launch — Google won't index it. Before pointing the real domain, do these:
+The site is live at `https://panbejgl.cz`. A few things to keep current when editing:
 
-- [ ] Fill all `TODO` values in `content.json` (address number, phone, menu prices)
-- [ ] Replace `images/placeholder-*.svg` with real photos (10 high-res photos ideal)
-- [ ] Get Google Maps embed URL: Google Maps → search "Pan Bejgl" → Share → Embed a map → copy `src` into `shop.map_embed_src`
-- [ ] Confirm IG / FB URLs
-- [ ] **Remove** the `<meta name="robots" content="noindex">` line in `index.html`
+- Keep the `content.json` values accurate — address, phone, menu prices.
+- Google Maps embed: Google Maps → search "Pan Bejgl" → Share → Embed a map → copy `src` into `shop.map_embed_src`.
+- Confirm the IG / FB URLs still point to the live profiles.
 
 ## Deploy to GitHub Pages
 
