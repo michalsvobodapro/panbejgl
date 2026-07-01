@@ -7,7 +7,8 @@ const DAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 const I18N = {
   cs: {
     "brand.sub": "Bistró Kafe — Praha 2",
-    "nav.about": "O nás", "nav.menu": "Menu", "nav.hours": "Otevřeno", "nav.visit": "Najdete nás",
+    "nav.about": "O nás", "nav.menu": "Menu", "nav.catering": "Catering", "nav.hours": "Otevřeno", "nav.visit": "Najdete nás",
+    "catering.title.em": "Catering", "catering.title": "a pohoštění",
     "hero.eyebrow": "BLANICKÁ · PRAHA 2 · VINOHRADY",
     "meta.address": "Adresa", "meta.today": "Dnes", "meta.serving": "Podáváme", "meta.coffee": "Káva",
     "meta.serving.val": "Snídaně & oběd", "meta.coffee.val": "Bio · Fair Trade",
@@ -39,7 +40,8 @@ const I18N = {
   },
   en: {
     "brand.sub": "Bistro Café — Prague 2",
-    "nav.about": "About", "nav.menu": "Menu", "nav.hours": "Hours", "nav.visit": "Visit",
+    "nav.about": "About", "nav.menu": "Menu", "nav.catering": "Catering", "nav.hours": "Hours", "nav.visit": "Visit",
+    "catering.title.em": "Catering", "catering.title": "& boxes",
     "hero.eyebrow": "BLANICKÁ · PRAGUE 2 · VINOHRADY",
     "meta.address": "Address", "meta.today": "Today", "meta.serving": "Serving", "meta.coffee": "Coffee",
     "meta.serving.val": "Breakfast & lunch", "meta.coffee.val": "Organic · Fair Trade",
@@ -279,6 +281,77 @@ function renderMenu() {
   });
 }
 
+function renderCatering() {
+  const grid = document.getElementById("catering-grid");
+  if (!grid || !CONTENT.catering) return;
+  const c = CONTENT.catering;
+  document.getElementById("catering-intro").textContent = pickLang(c.intro);
+
+  grid.innerHTML = "";
+  (c.groups || []).forEach((cat, i) => {
+    const wrap = document.createElement("details");
+    wrap.className = "menu-cat";
+    wrap.dataset.catIdx = String(i);
+    wrap.open = true;                       // only 3 groups — show all (přehledně)
+
+    const head = document.createElement("summary");
+    head.className = "menu-cat-head";
+    const title = document.createElement("span");
+    title.className = "menu-cat-title";
+    title.textContent = pickLang(cat.category);
+    const icon = document.createElement("span");
+    icon.className = "menu-cat-icon";
+    icon.setAttribute("aria-hidden", "true");
+    head.append(title, icon);
+    wrap.appendChild(head);
+
+    const body = document.createElement("div");
+    body.className = "menu-cat-body";
+    const dtxt = pickLang(cat.desc);
+    if (dtxt) {
+      const note = document.createElement("p");
+      note.className = "menu-cat-note";
+      note.textContent = dtxt;
+      body.appendChild(note);
+    }
+    (cat.items || []).forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "menu-item";
+      const nameWrap = document.createElement("div");
+      nameWrap.className = "menu-item-name";
+      const name = document.createElement("span");
+      name.textContent = pickLang(item.name);
+      nameWrap.appendChild(name);           // no leader, no price
+      row.appendChild(nameWrap);
+      body.appendChild(row);
+    });
+    wrap.appendChild(body);
+    grid.appendChild(wrap);
+  });
+
+  const info = document.getElementById("catering-info");
+  info.innerHTML = "";
+  (c.ordering || []).forEach((r) => {
+    const row = document.createElement("div");
+    row.className = "ci-row";
+    const l = document.createElement("span");
+    l.className = "ci-label";
+    l.textContent = pickLang(r.label);
+    const tx = document.createElement("span");
+    tx.className = "ci-text";
+    tx.textContent = pickLang(r.text);
+    row.append(l, tx);
+    info.appendChild(row);
+  });
+  if (c.cta && CONTENT.shop?.phone) {
+    const cta = document.createElement("a");
+    cta.className = "catering-cta";
+    cta.href = `tel:${CONTENT.shop.phone.replace(/\s+/g, "")}`;
+    cta.textContent = pickLang(c.cta);
+    info.appendChild(cta);
+  }
+}
+
 function renderGallery() {
   const grid = document.getElementById("gallery");
   if (!grid || !Array.isArray(CONTENT.gallery)) return;
@@ -345,8 +418,8 @@ function injectSchema() {
     address: {
       "@type": "PostalAddress",
       streetAddress: s.address_line1,
-      addressLocality: "Praha",
-      postalCode: "120 00",
+      addressLocality: s.city || "Praha",
+      postalCode: s.postal_code || "120 00",
       addressCountry: "CZ",
     },
     telephone: s.phone,
@@ -362,6 +435,7 @@ function renderAll() {
   renderStatic();
   renderGallery();
   renderMenu();
+  renderCatering();
   renderHours();
   injectSchema();
 }
