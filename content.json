@@ -17,11 +17,11 @@
     "hero_image": "images/interier.jpg"
   },
   "hours": {
-    "mon": "08:00-17:00",
-    "tue": "08:00-17:00",
-    "wed": "08:00-17:00",
-    "thu": "08:00-17:00",
-    "fri": "08:00-17:00",
+    "mon": "07:00-17:00",
+    "tue": "07:00-17:00",
+    "wed": "07:00-17:00",
+    "thu": "07:00-17:00",
+    "fri": "07:00-17:00",
     "sat": "closed",
     "sun": "closed"
   },
@@ -34,8 +34,8 @@
     "en": "coffee & breakfast in Vinohrady"
   },
   "about": {
-    "cs": "Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a domácí polévky. Po–So jsme tu pro vaše lepší rána.",
-    "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Mon–Sat for better mornings."
+    "cs": "Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a domácí polévky. Po–Pá jsme tu pro vaše lepší rána.",
+    "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Mon–Fri for better mornings."
   },
   "gallery": [
     { "src": "images/bagel-snidanovy.jpg",       "caption": "Snídaňový speciál" },
