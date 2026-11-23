@@ -1,4 +1,23 @@
 {
+  "status": {
+    "temporarily_closed": true,
+    "message": {
+      "cs": "Na Blanické máme dočasně zavřeno. Mezitím nás najdete na farmářských trzích.",
+      "en": "Our shop on Blanická is temporarily closed. Meanwhile, you'll find us at farmers' markets."
+    },
+    "reopening": { "cs": "brzy", "en": "soon" },
+    "about": {
+      "cs": "Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a domácí polévky. Teď máme dočasně zavřeno, ale pro vaše lepší rána se zase vrátíme.",
+      "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Closed for now, but we'll be back for better mornings."
+    },
+    "markets": [
+      {
+        "name": "Kulaťák",
+        "place": { "cs": "Vítězné náměstí, Praha 6", "en": "Vítězné náměstí, Prague 6" },
+        "when": { "cs": "", "en": "" }
+      }
+    ]
+  },
   "shop": {
     "name": "Pan Bejgl",
     "full_name": "Pan Bejgl Bistró Kafe",
@@ -15,6 +34,13 @@
     "map_link": "https://www.google.com/maps/place/Pan+Bejgl+Bistr%C3%B3+Kafe/@50.0745603,14.439286,17z",
     "logo": "images/logo.jpg",
     "hero_image": "images/interier.jpg"
+  },
+  "operator": {
+    "legal_name": "",
+    "registered_address": "",
+    "ico": "",
+    "dic": "",
+    "register_entry": { "cs": "", "en": "" }
   },
   "hours": {
     "mon": "07:00-17:00",
@@ -38,17 +64,17 @@
     "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Mon–Fri for better mornings."
   },
   "gallery": [
-    { "src": "images/bagel-snidanovy.jpg",       "caption": "Snídaňový speciál" },
-    { "src": "images/bagel-vajicko.jpg",         "caption": "Vajíčkový poctivec" },
-    { "src": "images/bagel-sunka-syr.jpg",       "caption": "Šunka & sýr" },
-    { "src": "images/bagel-tunak.jpg",           "caption": "Tuňákový bejgl" },
-    { "src": "images/bagel-kure-avokado.jpg",    "caption": "Kuřecí s avokádem" },
-    { "src": "images/bagel-bbq.jpg",             "caption": "BBQ trhačka" },
-    { "src": "images/bagel-hovezi-chipotle.jpg", "caption": "Hovězí s chipotle" },
-    { "src": "images/caesar-kure.jpg",           "caption": "Caesar s kuřetem" },
-    { "src": "images/caesar-losos.jpg",          "caption": "Caesar s lososem" },
-    { "src": "images/kase-ovesna.jpg",           "caption": "Ovesná kaše" },
-    { "src": "images/polevka-gulas.jpg",         "caption": "Polévka dne" }
+    { "src": "images/bagel-snidanovy.jpg",       "caption": { "cs": "Snídaňový speciál", "en": "Breakfast special" } },
+    { "src": "images/bagel-vajicko.jpg",         "caption": { "cs": "Vajíčkový poctivec", "en": "Egg classic" } },
+    { "src": "images/bagel-sunka-syr.jpg",       "caption": { "cs": "Šunka & sýr", "en": "Ham & cheese" } },
+    { "src": "images/bagel-tunak.jpg",           "caption": { "cs": "Tuňákový bejgl", "en": "Tuna bagel" } },
+    { "src": "images/bagel-kure-avokado.jpg",    "caption": { "cs": "Kuřecí s avokádem", "en": "Chicken with avocado" } },
+    { "src": "images/bagel-bbq.jpg",             "caption": { "cs": "BBQ trhačka", "en": "BBQ pulled pork" } },
+    { "src": "images/bagel-hovezi-chipotle.jpg", "caption": { "cs": "Hovězí s chipotle", "en": "Beef with chipotle" } },
+    { "src": "images/caesar-kure.jpg",           "caption": { "cs": "Caesar s kuřetem", "en": "Caesar with chicken" } },
+    { "src": "images/caesar-losos.jpg",          "caption": { "cs": "Caesar s lososem", "en": "Caesar with salmon" } },
+    { "src": "images/kase-ovesna.jpg",           "caption": { "cs": "Ovesná kaše", "en": "Oatmeal" } },
+    { "src": "images/polevka-gulas.jpg",         "caption": { "cs": "Polévka dne", "en": "Soup of the day" } }
   ],
   "menu": [
     {

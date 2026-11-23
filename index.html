@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pan Bejgl — Bistró Kafe, Vinohrady</title>
-<meta name="description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech. Pan Bejgl, Blanická 772/6, Praha 2.">
+<meta name="description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <link rel="canonical" href="https://panbejgl.cz/">
 
 <meta property="og:title" content="Pan Bejgl — Bistró Kafe">
-<meta property="og:description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech.">
+<meta property="og:description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <meta property="og:type" content="restaurant.restaurant">
 <meta property="og:url" content="https://panbejgl.cz/">
 <meta property="og:image" content="https://panbejgl.cz/images/bagel-snidanovy.jpg">
@@ -19,63 +19,65 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pan Bejgl — Bistró Kafe">
-<meta name="twitter:description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech.">
+<meta name="twitter:description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <meta name="twitter:image" content="https://panbejgl.cz/images/bagel-snidanovy.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-<link rel="apple-touch-icon" href="/images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preload" href="images/interier.jpg" as="image" fetchpriority="high">
+<link rel="preload" href="fonts/playfair-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 
 <script type="application/ld+json" id="ld-business">{}</script>
 </head>
 <body>
 
+<a class="skip-link" href="#main" data-i18n="skip">Přeskočit na obsah</a>
+
 <!-- Top ribbon -->
-<div class="ribbon" aria-hidden="true">
+<div class="ribbon" id="ribbon" aria-hidden="true">
   <div class="ribbon-track">
     <span><span class="star">✻</span> Bio káva</span>
     <span><span class="star">✻</span> Čerstvé bejgly</span>
     <span><span class="star">✻</span> Domácí bábovky</span>
     <span><span class="star">✻</span> Blanická 772/6, Vinohrady</span>
-    <span><span class="star">✻</span> Otevřeno Po–Pá</span>
     <span><span class="star">✻</span> Bio káva</span>
     <span><span class="star">✻</span> Čerstvé bejgly</span>
     <span><span class="star">✻</span> Domácí bábovky</span>
     <span><span class="star">✻</span> Blanická 772/6, Vinohrady</span>
-    <span><span class="star">✻</span> Otevřeno Po–Pá</span>
   </div>
 </div>
 
 <!-- Header -->
 <header class="header" id="top">
   <div class="header-left">
-    <img class="brand-mark" id="brand-logo" src="images/logo.jpg" alt="Pan Bejgl">
+    <img class="brand-mark" id="brand-logo" src="images/logo.jpg" alt="" width="46" height="46">
     <div class="brand-text">
       <span class="brand-name">Pan Bejgl</span>
       <span class="brand-sub" data-i18n="brand.sub">Bistró Kafe — Praha 2</span>
     </div>
   </div>
-  <nav class="header-center" aria-label="Primary">
+  <nav class="header-center" aria-label="Hlavní navigace" data-i18n-aria="nav.label">
     <a href="#about" data-i18n="nav.about">O nás</a>
     <a href="#menu" data-i18n="nav.menu">Menu</a>
     <a href="#catering" data-i18n="nav.catering">Catering</a>
-    <a href="#hours" data-i18n="nav.hours">Otevřeno</a>
+    <a href="#hours" data-i18n="nav.hours">Otevírací doba</a>
     <a href="#visit" data-i18n="nav.visit">Najdete nás</a>
   </nav>
   <div class="header-right">
     <span class="pill-status" id="pill-status" aria-live="polite">
       <span class="dot"></span><span id="pill-status-text">—</span>
     </span>
-    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Přepnout do angličtiny" data-i18n-aria="lang.switch">
       <span data-lang="cs">CS</span><span class="sep">/</span><span data-lang="en">EN</span>
     </button>
   </div>
 </header>
+
+<main id="main" tabindex="-1">
 
 <!-- Hero -->
 <section class="hero">
@@ -104,10 +106,18 @@
   </nav>
   <div class="hero-inner">
     <span class="hero-eyebrow"><span class="line"></span><span data-i18n="hero.eyebrow">BLANICKÁ · PRAHA 2 · VINOHRADY</span><span class="line"></span></span>
-    <img class="hero-logo" id="hero-logo" src="images/logo.jpg" alt="">
+    <img class="hero-logo" id="hero-logo" src="images/logo.jpg" alt="" width="130" height="130">
     <h1 class="hero-title">Pan <em>Bejgl</em></h1>
     <p class="hero-tagline" id="hero-tagline">Bio káva, čerstvé bejgly a domácí bábovky</p>
     <p class="hero-subtitle" id="hero-subtitle">káva a snídaně na Vinohradech</p>
+    <div class="hero-notice" id="hero-notice" role="status" hidden>
+      <span class="hero-notice-kicker"><span class="dot"></span><span data-i18n="status.temp_closed">Dočasně zavřeno</span></span>
+      <p class="hero-notice-text" id="hero-notice-text"></p>
+      <span class="hero-notice-foot">
+        <span id="hero-notice-reopen"></span>
+        <a class="hero-notice-link" href="#hours" data-i18n="closure.where">Kde nás najdete</a>
+      </span>
+    </div>
   </div>
   <div class="hero-meta">
     <div>
@@ -135,7 +145,7 @@
   <p class="pull-text" id="pull-text">
     Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a&nbsp;domácí polévky.
   </p>
-  <span class="pull-author" data-i18n="pull.byline">Po — Pá · pro lepší rána</span>
+  <span class="pull-author" id="pull-byline">pro lepší rána</span>
 </section>
 
 <!-- Photo gallery -->
@@ -152,7 +162,7 @@
     </div>
     <div class="gallery" id="gallery"></div>
     <div class="gallery-more">
-      <button id="gallery-more-btn" type="button">
+      <button id="gallery-more-btn" type="button" aria-controls="gallery" aria-expanded="false">
         <span id="gallery-more-label" data-i18n="gallery.more">Zobrazit více fotek</span>
       </button>
     </div>
@@ -173,7 +183,7 @@
     </div>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="menu-note" data-i18n="menu.note">
-      Ceny jsou orientační — aktuální nabídku najdete na tabuli v kafi.
+      Ceny jsou orientační — aktuální nabídku najdete na tabuli u nás.
       Cokoliv připravíme i s sebou.
     </p>
   </div>
@@ -204,9 +214,12 @@
       <h2><em data-i18n="hours.title.em">Otevírací</em> <span data-i18n="hours.title">doba</span></h2>
     </div>
     <ul class="hours-list" id="hours-list"></ul>
-    <p class="hours-note" data-i18n="hours.note">
-      V neděli máme zavřeno — odpočíváme a pečeme na pondělí.
-    </p>
+    <div class="markets" id="markets" hidden>
+      <p class="markets-lead" id="markets-lead" data-i18n="markets.lead">Než znovu otevřeme, najdete nás na farmářských trzích, třeba tady:</p>
+      <ul class="markets-list" id="markets-list"></ul>
+      <img class="markets-photo" src="images/pecivo-1.jpg" alt="" width="1100" height="825" loading="lazy" decoding="async">
+    </div>
+    <p class="hours-note" id="hours-note" hidden></p>
   </div>
   <div class="pane pane-visit" id="visit">
     <div class="pane-head">
@@ -217,15 +230,16 @@
       <span class="small" data-i18n="visit.where">Vinohrady · Praha 2</span>
       <span id="visit-address-street">Blanická 772/6</span><br>
       <span id="visit-address-city">120 00 Praha</span>
+      <span class="closed-tag" data-i18n="status.temp_closed" hidden>Dočasně zavřeno</span>
     </p>
     <div class="contact-grid">
       <div class="contact-item">
         <span class="label" data-i18n="visit.phone">Telefon</span>
-        <a id="visit-phone" href="#">—</a>
+        <a id="visit-phone" href="tel:+420733733519">+420 733 733 519</a>
       </div>
       <div class="contact-item">
         <span class="label" data-i18n="visit.email">E-mail</span>
-        <a id="visit-email" href="#">—</a>
+        <a id="visit-email" href="mailto:jana-sookol@seznam.cz">jana-sookol@seznam.cz</a>
       </div>
       <div class="contact-item">
         <span class="label">Instagram</span>
@@ -236,18 +250,30 @@
         <a id="visit-fb" href="#" target="_blank" rel="noopener" data-i18n="visit.fb.label">Pan Bejgl Praha</a>
       </div>
     </div>
-    <div class="map-wrap">
-      <iframe id="map-iframe" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
+    <div class="map-wrap" id="map-wrap">
+      <div class="map-consent" id="map-consent">
+        <svg class="map-consent-pin" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path>
+          <circle cx="12" cy="10" r="2.4"></circle>
+        </svg>
+        <p class="map-consent-address" id="map-address">Blanická 772/6, 120 00 Praha 2 – Vinohrady</p>
+        <span class="closed-tag" data-i18n="status.temp_closed" hidden>Dočasně zavřeno</span>
+        <button class="map-consent-btn" id="map-load" type="button" data-i18n="map.load">Zobrazit mapu</button>
+        <p class="map-consent-note" id="map-note" data-i18n="map.note">Načte obsah ze služby Google Maps, kde platí zásady Googlu.</p>
+        <a class="map-consent-link" id="map-link" href="#" target="_blank" rel="noopener" data-i18n="map.open">Otevřít v Google Maps</a>
+      </div>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
-  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close">✕</button>
-  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous">‹</button>
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Prohlížeč fotek" data-i18n-aria="lightbox.label">
+  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Zavřít" data-i18n-aria="lightbox.close">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Předchozí fotka" data-i18n-aria="lightbox.prev">‹</button>
   <img class="lightbox-img" id="lightbox-img" alt="">
-  <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Next">›</button>
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Další fotka" data-i18n-aria="lightbox.next">›</button>
   <span class="lightbox-counter" id="lightbox-counter"></span>
 </div>
 
@@ -255,7 +281,7 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="mark">
-      <img id="footer-logo" src="images/logo.jpg" alt="">
+      <img id="footer-logo" src="images/logo.jpg" alt="" width="28" height="28">
       <span>Pan Bejgl Bistró Kafe</span>
     </div>
     <nav class="footer-social" aria-label="Sociální sítě a objednávky">
@@ -279,9 +305,26 @@
         </svg>
       </a>
     </nav>
-    <span class="right">© <span id="year"></span> · <span data-i18n="footer.tag">Pečeno na Vinohradech</span></span>
+    <span class="right dot-list"><span>© <span id="year"></span></span><span data-i18n="footer.tag">Pečeno na Vinohradech</span><a class="footer-link" id="privacy-open" href="#privacy" aria-haspopup="dialog" data-i18n="privacy.link">Ochrana soukromí</a></span>
   </div>
+  <p class="footer-legal dot-list" id="footer-legal" hidden></p>
 </footer>
+
+<dialog class="privacy" id="privacy" aria-labelledby="privacy-title">
+  <div class="privacy-inner">
+    <form method="dialog">
+      <button class="privacy-close" id="privacy-close" type="submit" aria-label="Zavřít" data-i18n-aria="privacy.close">✕</button>
+    </form>
+    <h2 id="privacy-title"><em data-i18n="privacy.title.em">Ochrana</em> <span data-i18n="privacy.title">soukromí</span></h2>
+    <p data-i18n="privacy.intro">Tenhle web je jen naše vizitka. Nemá žádné formuláře, analytiku, reklamu ani sledovací cookies.</p>
+    <p data-i18n="privacy.storage">Ve vašem prohlížeči si web pamatuje jen to, jestli ho chcete česky, nebo anglicky (v místním úložišti, tzv. local storage). Nikam se to neodesílá a smazat to můžete v nastavení prohlížeče.</p>
+    <p><span data-i18n="privacy.hosting">Web běží na GitHub Pages. Jejich provozovatel, společnost GitHub, při doručování stránek zpracovává technické údaje, jako je IP adresa, ve svých serverových záznamech.</span> <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" data-i18n="privacy.hosting.link">Zásady ochrany soukromí GitHubu</a></p>
+    <p><span data-i18n="privacy.map">Mapa od Googlu se načte, až když kliknete na „Zobrazit mapu“ (nebo otevřete odkaz do Google Maps). Teprve pak se váš prohlížeč spojí s Googlem a platí jeho podmínky a zásady ochrany soukromí.</span> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" data-i18n="privacy.map.link">Zásady ochrany soukromí Googlu</a></p>
+    <p data-i18n="privacy.contact">Když nám zavoláte nebo napíšete e-mail, použijeme vaše kontaktní údaje jen k vyřízení vašeho dotazu.</p>
+    <p id="privacy-controller">Správcem vašich údajů je Pan Bejgl Bistró Kafe. Ozvat se nám můžete na <a href="mailto:jana-sookol@seznam.cz">jana-sookol@seznam.cz</a> nebo <a href="tel:+420733733519">+420 733 733 519</a>.</p>
+    <p><span data-i18n="privacy.complaint">Pokud máte pocit, že s vašimi údaji nezacházíme správně, můžete si stěžovat u Úřadu pro ochranu osobních údajů (ÚOOÚ):</span> <a href="https://uoou.gov.cz" target="_blank" rel="noopener">uoou.gov.cz</a>.</p>
+  </div>
+</dialog>
 
 <script src="script.js"></script>
 </body>

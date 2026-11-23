@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Photo workflow helper for Pan Bejgl.
 #
-# Compress + resize a photo and copy it into images/ with a clean name.
+# Compress + resize a photo and copy it into images/ with a clean name,
+# plus a 700 px images/<slug>-700.jpg that phones load for gallery tiles.
 # Optionally also append it to content.json's "gallery" array.
 #
 # Usage:
@@ -34,9 +35,19 @@ compress_into_images() {
     echo "Source file not found: $src" >&2; exit 1
   fi
   local dst="images/${slug}.jpg"
+  local small="images/${slug}-700.jpg"
   cp "$src" "$dst"
-  sips -Z 1400 -s formatOptions 70 "$dst" > /dev/null
-  echo "→ Saved: $dst ($(du -h "$dst" | cut -f1))"
+  # sips' quality scale runs high: 40 here matches the libjpeg ~70 the gallery photos use; sips 70 is ~90 and 30-50% larger.
+  sips $(fit_args "$dst" 1400) -s format jpeg -s formatOptions 40 "$dst" > /dev/null
+  sips $(fit_args "$dst" 700) -s format jpeg -s formatOptions 40 "$dst" --out "$small" > /dev/null
+  echo "→ Saved: $dst ($(du -h "$dst" | cut -f1)), $small ($(du -h "$small" | cut -f1))"
+}
+
+# sips -Z also enlarges smaller images, so only pass it when the photo is bigger than the target.
+fit_args() {
+  local longest
+  longest=$(sips -g pixelWidth -g pixelHeight "$1" | awk '/pixel(Width|Height)/ { if ($2 > m) m = $2 } END { print m }')
+  if (( longest > $2 )); then echo "-Z $2"; fi
 }
 
 append_to_gallery() {
@@ -71,7 +82,15 @@ case "$cmd" in
     compress_into_images "$src" "$slug"
     ;;
   list)
-    python3 -c "import json; c=json.load(open('content.json')); [print(f'{i+1:>2}. {g[\"src\"]:<32} {g.get(\"caption\",\"\")}') for i,g in enumerate(c.get('gallery',[]))]"
+    python3 - <<'PY'
+import json
+c = json.load(open("content.json", encoding="utf-8"))
+for i, g in enumerate(c.get("gallery", [])):
+    cap = g.get("caption", "")
+    if isinstance(cap, dict):
+        cap = " / ".join(v for v in (cap.get("cs"), cap.get("en")) if v)
+    print(f"{i+1:>2}. {g['src']:<32} {cap}")
+PY
     ;;
   *)
     usage
