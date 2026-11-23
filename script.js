@@ -199,10 +199,23 @@ function parseHHMM(s) {
   return h * 60 + m;
 }
 
-function computeOpenStatus(now = new Date()) {
-  const idx = (now.getDay() + 6) % 7;
-  const h = dayHours(DAY_KEYS[idx]);
-  const mins = now.getHours() * 60 + now.getMinutes();
+const PRAGUE_CLOCK = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Europe/Prague", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
+});
+const WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+function pragueNow(now = new Date()) {
+  const p = Object.fromEntries(PRAGUE_CLOCK.formatToParts(now).map(({ type, value }) => [type, value]));
+  return { dayIdx: WEEKDAYS.indexOf(p.weekday), mins: Number(p.hour) * 60 + Number(p.minute) };
+}
+
+function dashRange(s) {
+  return s.replace("-", "–");
+}
+
+function computeOpenStatus() {
+  const { dayIdx, mins } = pragueNow();
+  const h = dayHours(DAY_KEYS[dayIdx]);
   if (h) {
     const [open, close] = h.split("-").map(parseHHMM);
     if (mins >= open && mins < close) return { open: true, closes: h.split("-")[1] };
@@ -274,7 +287,7 @@ function renderStatic() {
   document.querySelector('meta[property="og:locale"]').content = t("og.locale");
   document.querySelector('meta[property="og:locale:alternate"]').content = I18N[lang === "cs" ? "en" : "cs"]["og.locale"];
 
-  const days = openDaysLabel(" — ");
+  const days = openDaysLabel("–");
   document.getElementById("pull-byline").textContent = closed
     ? t("pull.byline.closed")
     : [days, t("pull.byline")].filter(Boolean).join(" · ");
@@ -306,9 +319,24 @@ function renderStatic() {
     return;
   }
 
-  const idx = (new Date().getDay() + 6) % 7;
-  const todayKey = DAY_KEYS[idx];
-  document.getElementById("hero-today").textContent = dayHours(todayKey) ?? t("closed");
+  renderOpenStatus();
+
+  const shop = CONTENT.shop ?? {};
+  const openDays = openDaysLabel("–");
+  renderRibbon([
+    t("ribbon.coffee"),
+    t("ribbon.bagels"),
+    t("ribbon.cakes"),
+    shop.address_line1 && t("ribbon.where", { street: shop.address_line1 }),
+    openDays && t("ribbon.open", { days: openDays }),
+  ].filter(Boolean));
+}
+
+function renderOpenStatus() {
+  const { dayIdx } = pragueNow();
+  const today = dayHours(DAY_KEYS[dayIdx]);
+  document.getElementById("hero-today").textContent = today ? dashRange(today) : t("closed");
+  document.querySelectorAll("#hours-list li").forEach((li, i) => li.classList.toggle("today", i === dayIdx));
 
   const pill = document.getElementById("pill-status");
   const txt = document.getElementById("pill-status-text");
@@ -328,16 +356,6 @@ function renderStatic() {
     pill.classList.add("is-closed");
   }
   pill.setAttribute("aria-label", pill.title);
-
-  const shop = CONTENT.shop ?? {};
-  const openDays = openDaysLabel("–");
-  renderRibbon([
-    t("ribbon.coffee"),
-    t("ribbon.bagels"),
-    t("ribbon.cakes"),
-    shop.address_line1 && t("ribbon.where", { street: shop.address_line1 }),
-    openDays && t("ribbon.open", { days: openDays }),
-  ].filter(Boolean));
 }
 
 function renderShop() {
@@ -420,7 +438,12 @@ function loadMap() {
   iframe.title = t("map.title", { address: document.getElementById("map-address").textContent });
   iframe.referrerPolicy = "strict-origin-when-cross-origin";
   document.getElementById("map-consent").hidden = true;
-  document.getElementById("map-wrap").append(iframe);
+  const wrap = document.getElementById("map-wrap");
+  wrap.append(iframe);
+  const after = document.createElement("p");
+  after.className = "map-after";
+  after.append(document.getElementById("map-link"));
+  wrap.after(after);
   iframe.focus();
 }
 
@@ -436,7 +459,11 @@ function renderOperator() {
   ].filter(Boolean);
   const legal = document.getElementById("footer-legal");
   legal.hidden = !parts.length;
-  legal.textContent = parts.length ? `${t("operator.label")} ${parts.join(" · ")}` : "";
+  legal.replaceChildren(...parts.map((text, i) => {
+    const item = document.createElement("span");
+    item.textContent = i ? text : `${t("operator.label")} ${text}`;
+    return item;
+  }));
 
   const controller = op.legal_name
     ? [op.legal_name, op.registered_address, op.ico && `${t("operator.ico")}\u00a0${op.ico}`].filter(Boolean).join(", ")
@@ -611,18 +638,30 @@ function renderGallery() {
   if (!grid || !Array.isArray(CONTENT.gallery)) return;
   grid.innerHTML = "";
   CONTENT.gallery.forEach((item, i) => {
+    const caption = pickLang(item.caption);
     const fig = document.createElement("figure");
     fig.className = "g" + (i + 1);
     fig.tabIndex = 0;
     fig.setAttribute("role", "button");
-    fig.setAttribute("aria-label", item.caption ? t("gallery.open", { caption: item.caption }) : t("lightbox.label"));
+    fig.setAttribute("aria-label", caption ? t("gallery.open", { caption }) : t("lightbox.label"));
     const img = document.createElement("img");
     img.loading = "lazy";
     img.decoding = "async";
+    const small = /\.jpg$/i.test(item.src) && item.src.replace(/\.jpg$/i, "-700.jpg");
+    if (small) {
+      const wide = i % 5 === 0 || i % 10 === 5;
+      img.srcset = `${small} 700w, ${item.src} 1400w`;
+      img.sizes = wide ? "(max-width: 760px) 100vw, 50vw" : "(max-width: 760px) 50vw, 25vw";
+      img.addEventListener("error", () => {
+        if (!img.srcset) return;
+        img.removeAttribute("srcset");
+        img.src = item.src;
+      }, { once: true });
+    }
     img.src = item.src;
-    img.alt = item.caption || "";
+    img.alt = caption;
     const cap = document.createElement("figcaption");
-    cap.textContent = item.caption || "";
+    cap.textContent = caption;
     fig.appendChild(img);
     fig.appendChild(cap);
     grid.appendChild(fig);
@@ -632,7 +671,7 @@ function renderGallery() {
 function renderHours() {
   const list = document.getElementById("hours-list");
   list.innerHTML = "";
-  const todayIdx = (new Date().getDay() + 6) % 7;
+  const todayIdx = pragueNow().dayIdx;
   DAY_KEYS.forEach((k, i) => {
     const li = document.createElement("li");
     if (i === todayIdx) li.classList.add("today");
@@ -646,7 +685,7 @@ function renderHours() {
     dots.className = "dots";
     const hrs = document.createElement("span");
     hrs.className = "hrs";
-    hrs.textContent = isClosed ? t("closed") : h;
+    hrs.textContent = isClosed ? t("closed") : dashRange(h);
     li.appendChild(day);
     li.appendChild(dots);
     li.appendChild(hrs);
@@ -665,6 +704,7 @@ function renderClosure() {
   notice.hidden = !closed;
   hoursList.hidden = !!closed;
   markets.hidden = !closed;
+  document.querySelectorAll(".closed-tag").forEach((el) => { el.hidden = !closed; });
   if (!closed) return;
 
   const when = pickLang(closed.reopening);
@@ -754,7 +794,43 @@ function renderAll() {
   renderClosure();
   renderOperator();
   injectSchema();
+  markLineStarts();
+  updateNavFade();
 }
+
+// Separators are drawn before every item that doesn't begin a line, so a wrapped line never starts or ends with "·".
+function markLineStarts() {
+  document.querySelectorAll(".dot-list").forEach((list) => {
+    let lineTop = null;
+    for (const item of list.children) {
+      const top = item.offsetTop;
+      item.toggleAttribute("data-sep", lineTop !== null && Math.abs(top - lineTop) < 2);
+      if (lineTop === null || Math.abs(top - lineTop) >= 2) lineTop = top;
+    }
+  });
+}
+
+const nav = document.querySelector(".header-center");
+function updateNavFade() {
+  nav.classList.toggle("scrolled", nav.scrollLeft > 1);
+  nav.classList.toggle("at-end", nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 1);
+}
+nav.addEventListener("scroll", updateNavFade, { passive: true });
+
+if ("ResizeObserver" in window) {
+  const ro = new ResizeObserver(() => { updateNavFade(); markLineStarts(); });
+  [nav, ...nav.children, ...document.querySelectorAll(".dot-list")].forEach((el) => ro.observe(el));
+}
+document.fonts?.ready.then(() => { updateNavFade(); markLineStarts(); });
+updateNavFade();
+markLineStarts();
+
+setInterval(() => {
+  if (CONTENT && !closure() && document.visibilityState === "visible") renderOpenStatus();
+}, 60000);
+document.addEventListener("visibilitychange", () => {
+  if (CONTENT && !closure() && document.visibilityState === "visible") renderOpenStatus();
+});
 
 document.getElementById("year").textContent = new Date().getFullYear();
 document.getElementById("lang-toggle").addEventListener("click", () => {
@@ -778,15 +854,22 @@ document.getElementById("map-load").addEventListener("click", loadMap);
     if (location.hash === "#privacy") history.replaceState(null, "", location.pathname + location.search);
   });
   if (location.hash === "#privacy") open();
+  addEventListener("hashchange", () => { if (location.hash === "#privacy") open(); });
 })();
 
-document.getElementById("gallery-more-btn").addEventListener("click", () => {
+document.getElementById("gallery-more-btn").addEventListener("click", (e) => {
+  const btn = e.currentTarget;
   const gallery = document.querySelector(".gallery");
   const label = document.getElementById("gallery-more-label");
   const expanded = gallery.classList.toggle("expanded");
-  document.getElementById("gallery-more-btn").setAttribute("aria-expanded", String(expanded));
+  btn.setAttribute("aria-expanded", String(expanded));
   label.dataset.i18n = expanded ? "gallery.less" : "gallery.more";
   label.textContent = t(label.dataset.i18n);
+  if (!expanded) {
+    btn.focus({ preventScroll: true });
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    btn.scrollIntoView({ block: "center", behavior: reduce ? "instant" : "smooth" });
+  }
 });
 
 // ---------- Lightbox ----------

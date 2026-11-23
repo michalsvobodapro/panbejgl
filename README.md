@@ -9,7 +9,7 @@ Plain HTML + CSS + vanilla JS. No build step. Hosted on GitHub Pages.
 
 - Hours: format is `"HH:MM-HH:MM"` (24h) or `"closed"`.
 - Menu prices: just text — `"55 Kč"`, `"od 65 Kč"`, etc.
-- Photos: add them with `tools/photo.sh` (below), which resizes and compresses them into `images/` and appends them to the `gallery` array. To replace a photo, edit its `src` / `caption` in `gallery`.
+- Photos: add them with `tools/photo.sh` (below), which resizes and compresses them into `images/` and appends them to the `gallery` array. A `caption` is either one string, shown in both languages, or `{ "cs": "…", "en": "…" }`. To replace a photo, edit its `src` / `caption` in `gallery`; phones load `images/<name>-700.jpg` when it exists, and the full photo otherwise.
 - Hero photo: `shop.hero_image`. `index.html` also preloads `images/interier.jpg` so the hero shows sooner; if you change the hero photo, update that `<link rel="preload">` too.
 - Each piece of copy has a `cs` (Czech) and `en` (English) field.
 
@@ -60,7 +60,7 @@ tools/preview.sh
 
 ## Tools
 
-- `tools/photo.sh add <file> <slug> "Caption"`: resizes to max 1400 px, compresses, saves `images/<slug>.jpg` and appends it to `gallery`. `add-only` skips `content.json`; `list` prints the gallery.
+- `tools/photo.sh add <file> <slug> "Caption"`: shrinks to max 1400 px (never enlarges), compresses, saves `images/<slug>.jpg` plus a 700 px `images/<slug>-700.jpg` for phones, and appends it to `gallery` with the caption as a plain string (turn it into `{ "cs", "en" }` by hand to add English). `add-only` skips `content.json`; `list` prints the gallery.
 - `tools/publish.sh "What changed"`: checks `content.json` is valid JSON (aborts if not), stages **everything** (`git add -A`), commits and pushes the current branch. Run on `main`, that deploys: GitHub Pages rebuilds in about a minute. A phone may need a hard refresh (or `?v=2` on the URL) to show it.
 - To undo a published change: `git log --oneline`, then `git revert <hash>` and publish again.
 

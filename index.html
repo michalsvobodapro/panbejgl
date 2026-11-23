@@ -44,12 +44,10 @@
     <span><span class="star">✻</span> Čerstvé bejgly</span>
     <span><span class="star">✻</span> Domácí bábovky</span>
     <span><span class="star">✻</span> Blanická 772/6, Vinohrady</span>
-    <span><span class="star">✻</span> Otevřeno Po–Pá</span>
     <span><span class="star">✻</span> Bio káva</span>
     <span><span class="star">✻</span> Čerstvé bejgly</span>
     <span><span class="star">✻</span> Domácí bábovky</span>
     <span><span class="star">✻</span> Blanická 772/6, Vinohrady</span>
-    <span><span class="star">✻</span> Otevřeno Po–Pá</span>
   </div>
 </div>
 
@@ -66,7 +64,7 @@
     <a href="#about" data-i18n="nav.about">O nás</a>
     <a href="#menu" data-i18n="nav.menu">Menu</a>
     <a href="#catering" data-i18n="nav.catering">Catering</a>
-    <a href="#hours" data-i18n="nav.hours">Otevřeno</a>
+    <a href="#hours" data-i18n="nav.hours">Otevírací doba</a>
     <a href="#visit" data-i18n="nav.visit">Najdete nás</a>
   </nav>
   <div class="header-right">
@@ -147,7 +145,7 @@
   <p class="pull-text" id="pull-text">
     Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a&nbsp;domácí polévky.
   </p>
-  <span class="pull-author" id="pull-byline">Po — Pá · pro lepší rána</span>
+  <span class="pull-author" id="pull-byline">pro lepší rána</span>
 </section>
 
 <!-- Photo gallery -->
@@ -221,9 +219,7 @@
       <ul class="markets-list" id="markets-list"></ul>
       <img class="markets-photo" src="images/pecivo-1.jpg" alt="" width="1100" height="825" loading="lazy" decoding="async">
     </div>
-    <p class="hours-note" id="hours-note">
-      O víkendu máme zavřeno — odpočíváme a pečeme na pondělí.
-    </p>
+    <p class="hours-note" id="hours-note" hidden></p>
   </div>
   <div class="pane pane-visit" id="visit">
     <div class="pane-head">
@@ -234,6 +230,7 @@
       <span class="small" data-i18n="visit.where">Vinohrady · Praha 2</span>
       <span id="visit-address-street">Blanická 772/6</span><br>
       <span id="visit-address-city">120 00 Praha</span>
+      <span class="closed-tag" data-i18n="status.temp_closed" hidden>Dočasně zavřeno</span>
     </p>
     <div class="contact-grid">
       <div class="contact-item">
@@ -260,6 +257,7 @@
           <circle cx="12" cy="10" r="2.4"></circle>
         </svg>
         <p class="map-consent-address" id="map-address">Blanická 772/6, 120 00 Praha 2 – Vinohrady</p>
+        <span class="closed-tag" data-i18n="status.temp_closed" hidden>Dočasně zavřeno</span>
         <button class="map-consent-btn" id="map-load" type="button" data-i18n="map.load">Zobrazit mapu</button>
         <p class="map-consent-note" id="map-note" data-i18n="map.note">Načte obsah ze služby Google Maps, kde platí zásady Googlu.</p>
         <a class="map-consent-link" id="map-link" href="#" target="_blank" rel="noopener" data-i18n="map.open">Otevřít v Google Maps</a>
@@ -307,9 +305,9 @@
         </svg>
       </a>
     </nav>
-    <span class="right">© <span id="year"></span> · <span data-i18n="footer.tag">Pečeno na Vinohradech</span> · <a class="footer-link" id="privacy-open" href="#privacy" aria-haspopup="dialog" data-i18n="privacy.link">Ochrana soukromí</a></span>
+    <span class="right dot-list"><span>© <span id="year"></span></span><span data-i18n="footer.tag">Pečeno na Vinohradech</span><a class="footer-link" id="privacy-open" href="#privacy" aria-haspopup="dialog" data-i18n="privacy.link">Ochrana soukromí</a></span>
   </div>
-  <p class="footer-legal" id="footer-legal" hidden></p>
+  <p class="footer-legal dot-list" id="footer-legal" hidden></p>
 </footer>
 
 <dialog class="privacy" id="privacy" aria-labelledby="privacy-title">
