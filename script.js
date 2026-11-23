@@ -37,6 +37,17 @@ const I18N = {
     "closed": "Zavřeno",
     "day.mon": "Pondělí", "day.tue": "Úterý", "day.wed": "Středa", "day.thu": "Čtvrtek",
     "day.fri": "Pátek", "day.sat": "Sobota", "day.sun": "Neděle",
+    "status.temp_closed": "Dočasně zavřeno", "status.temp_closed.short": "Zavřeno",
+    "nav.hours.closed": "Na trzích",
+    "hours.title.em.closed": "Na", "hours.title.closed": "trzích",
+    "pull.byline.closed": "Teď na trzích · pro lepší rána",
+    "menu.note.closed": "Ceny jsou orientační, aktuální nabídku najdete u nás na stánku.",
+    "closure.reopen": "Znovu otevřeme {when}",
+    "closure.reopen_shop": "Na Blanické znovu otevřeme {when}.",
+    "closure.reopen_shop_nodate": "Na Blanické zase otevřeme.",
+    "closure.markets": "Najdete nás na farmářských trzích",
+    "closure.where": "Kde nás najdete",
+    "markets.lead": "Než znovu otevřeme, najdete nás na farmářských trzích, třeba tady:",
   },
   en: {
     "brand.sub": "Bistro Café — Prague 2",
@@ -70,6 +81,17 @@ const I18N = {
     "closed": "Closed",
     "day.mon": "Monday", "day.tue": "Tuesday", "day.wed": "Wednesday", "day.thu": "Thursday",
     "day.fri": "Friday", "day.sat": "Saturday", "day.sun": "Sunday",
+    "status.temp_closed": "Temporarily closed", "status.temp_closed.short": "Closed",
+    "nav.hours.closed": "Markets",
+    "hours.title.em.closed": "At the", "hours.title.closed": "markets",
+    "pull.byline.closed": "At the markets for now · for better mornings",
+    "menu.note.closed": "Prices are indicative; see our market stall for today's offer.",
+    "closure.reopen": "Reopening {when}",
+    "closure.reopen_shop": "We'll reopen on Blanická {when}.",
+    "closure.reopen_shop_nodate": "We'll reopen on Blanická.",
+    "closure.markets": "Find us at farmers' markets",
+    "closure.where": "Where to find us",
+    "markets.lead": "Until we reopen, you'll find us at farmers' markets, including:",
   },
 };
 
@@ -104,21 +126,47 @@ function computeOpenStatus(hours, now = new Date()) {
   return { open: false, closedToday: true };
 }
 
+function closure() {
+  const s = CONTENT.status;
+  return s?.temporarily_closed ? s : null;
+}
+
 function renderStatic() {
   document.documentElement.lang = lang;
+  const closed = closure();
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
     const k = el.dataset.i18n;
-    if (I18N[lang][k] != null) el.textContent = I18N[lang][k];
+    const v = (closed ? I18N[lang][k + ".closed"] : undefined) ?? I18N[lang][k];
+    if (v != null) el.textContent = v;
   });
 
   document.getElementById("hero-tagline").textContent = pickLang(CONTENT.tagline);
   document.getElementById("hero-subtitle").textContent = pickLang(CONTENT.subtitle);
-  document.getElementById("pull-text").textContent = pickLang(CONTENT.about);
+  document.getElementById("pull-text").textContent =
+    pickLang((closed && closed.about) || CONTENT.about);
 
   document.querySelectorAll("#lang-toggle [data-lang]").forEach((el) => {
     el.classList.toggle("active", el.dataset.lang === lang);
   });
+
+  if (closed) {
+    const label = t("status.temp_closed");
+    document.getElementById("hero-today").textContent = label;
+    const pill = document.getElementById("pill-status");
+    const long = document.createElement("span");
+    long.className = "pill-long";
+    long.textContent = label;
+    const short = document.createElement("span");
+    short.className = "pill-short";
+    short.textContent = t("status.temp_closed.short");
+    document.getElementById("pill-status-text").replaceChildren(long, short);
+    pill.title = label;
+    pill.classList.remove("is-open");
+    pill.classList.add("is-closed");
+    pill.setAttribute("aria-label", label);
+    return;
+  }
 
   const idx = (new Date().getDay() + 6) % 7;
   const todayKey = DAY_KEYS[idx];
@@ -396,17 +444,74 @@ function renderHours() {
   });
 }
 
+function renderClosure() {
+  const closed = closure();
+  const notice = document.getElementById("hero-notice");
+  const hoursList = document.getElementById("hours-list");
+  const markets = document.getElementById("markets");
+  notice.hidden = !closed;
+  hoursList.hidden = !!closed;
+  markets.hidden = !closed;
+  if (!closed) return;
+
+  const when = pickLang(closed.reopening);
+  const marketList = Array.isArray(closed.markets) ? closed.markets : [];
+
+  document.getElementById("hero-notice-text").textContent = pickLang(closed.message);
+  const reopen = document.getElementById("hero-notice-reopen");
+  reopen.textContent = when ? t("closure.reopen", { when }) : "";
+  reopen.hidden = !when;
+
+  document.getElementById("hours-note").textContent =
+    when ? t("closure.reopen_shop", { when }) : t("closure.reopen_shop_nodate");
+
+  const list = document.getElementById("markets-list");
+  list.innerHTML = "";
+  marketList.forEach((m) => {
+    const li = document.createElement("li");
+    [["market-name", m.name], ["market-place", m.place], ["market-when", m.when]].forEach(([cls, val]) => {
+      const text = pickLang(val);
+      if (!text) return;
+      const span = document.createElement("span");
+      span.className = cls;
+      span.textContent = text;
+      li.appendChild(span);
+    });
+    if (li.childNodes.length) list.appendChild(li);
+  });
+
+  const items = [
+    t("status.temp_closed"),
+    when && t("closure.reopen", { when }),
+    t("closure.markets"),
+    ...marketList.map((m) => [pickLang(m.name), pickLang(m.place)].filter(Boolean).join(", ")),
+  ].filter(Boolean);
+  const track = document.querySelector("#ribbon .ribbon-track");
+  track.innerHTML = "";
+  for (let i = 0; i < 4; i++) {
+    items.forEach((text) => {
+      const span = document.createElement("span");
+      const star = document.createElement("span");
+      star.className = "star";
+      star.textContent = "✻";
+      span.append(star, " " + text);
+      track.appendChild(span);
+    });
+  }
+}
+
 function injectSchema() {
   const s = CONTENT.shop ?? {};
+  const closed = closure();
+  const dayNames = {
+    mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday",
+    fri: "Friday", sat: "Saturday", sun: "Sunday",
+  };
   const openingSpecs = DAY_KEYS
     .filter((k) => CONTENT.hours[k] && CONTENT.hours[k] !== "closed")
     .map((k) => {
       const [open, close] = CONTENT.hours[k].split("-");
-      const dayName = {
-        mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday",
-        fri: "Friday", sat: "Saturday", sun: "Sunday",
-      }[k];
-      return { "@type": "OpeningHoursSpecification", dayOfWeek: dayName, opens: open, closes: close };
+      return { "@type": "OpeningHoursSpecification", dayOfWeek: dayNames[k], opens: open, closes: close };
     });
   const ld = {
     "@context": "https://schema.org",
@@ -424,9 +529,20 @@ function injectSchema() {
     },
     telephone: s.phone,
     email: s.email,
-    openingHoursSpecification: openingSpecs,
+    openingHoursSpecification: closed ? undefined : openingSpecs,
     sameAs: [s.instagram, s.facebook].filter(Boolean),
   };
+  if (closed) {
+    const message = closed.message?.cs || pickLang(closed.message);
+    if (message) ld.description = message;
+    // Google documents a closed day as opens = closes = "00:00"; there is no schema.org "temporarily closed" status.
+    ld.specialOpeningHoursSpecification = {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: Object.values(dayNames),
+      opens: "00:00",
+      closes: "00:00",
+    };
+  }
   document.getElementById("ld-business").textContent = JSON.stringify(ld);
 }
 
@@ -437,6 +553,7 @@ function renderAll() {
   renderMenu();
   renderCatering();
   renderHours();
+  renderClosure();
   injectSchema();
 }
 

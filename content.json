@@ -1,4 +1,23 @@
 {
+  "status": {
+    "temporarily_closed": true,
+    "message": {
+      "cs": "Na Blanické máme dočasně zavřeno. Mezitím nás najdete na farmářských trzích.",
+      "en": "Our shop on Blanická is temporarily closed. Meanwhile, you'll find us at farmers' markets."
+    },
+    "reopening": { "cs": "brzy", "en": "soon" },
+    "about": {
+      "cs": "Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a domácí polévky. Teď máme dočasně zavřeno, ale pro vaše lepší rána se zase vrátíme.",
+      "en": "Small bakery & coffee bar on Blanická. Fresh bagels, organic coffee, homemade soups. Closed for now, but we'll be back for better mornings."
+    },
+    "markets": [
+      {
+        "name": "Kulaťák",
+        "place": { "cs": "Vítězné náměstí, Praha 6", "en": "Vítězné náměstí, Prague 6" },
+        "when": { "cs": "", "en": "" }
+      }
+    ]
+  },
   "shop": {
     "name": "Pan Bejgl",
     "full_name": "Pan Bejgl Bistró Kafe",

@@ -219,6 +219,11 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   .pill-status{font-size:.58rem;padding:.28rem .5rem;gap:.4rem}
   .pill-status .dot{width:7px;height:7px}
 }
+.pill-status .pill-short{display:none}
+@media (max-width:440px){
+  .pill-status .pill-long{display:none}
+  .pill-status .pill-short{display:inline}
+}
 
 /* ========== HERO ========== */
 .hero{
@@ -320,6 +325,61 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   letter-spacing:.28em;
   text-transform:uppercase;
   color:rgba(212,154,82,.85);
+}
+
+.hero-notice{
+  margin-top:2rem;
+  max-width:34rem;
+  padding:1.3rem 1.8rem 1.4rem;
+  display:flex;flex-direction:column;align-items:center;gap:.75rem;
+  border:1px solid rgba(255,248,230,.18);
+  border-radius:4px;
+  background:rgba(20,12,5,.55);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+}
+.hero-notice[hidden]{display:none}
+.hero-notice-kicker{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-family:"DM Mono", monospace;
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--gold-light);
+}
+.hero-notice-kicker .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:var(--berry);
+  box-shadow:0 0 0 4px rgba(156,58,58,.28);
+}
+.hero-notice-text{
+  margin:0;
+  font-family:"Playfair Display", serif;
+  font-style:italic;
+  font-size:clamp(1.05rem, 1.8vw, 1.25rem);
+  line-height:1.45;
+  color:rgba(255,248,230,.92);
+  text-wrap:balance;
+}
+.hero-notice-foot{
+  display:flex;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:.4rem 1.2rem;
+  font-family:"DM Mono", monospace;
+  font-size:.68rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:rgba(255,248,230,.7);
+}
+.hero-notice-foot [hidden]{display:none}
+.hero-notice-link{
+  color:var(--gold-light);
+  border-bottom:1px solid rgba(212,154,82,.5);
+  padding-bottom:.1rem;
+  transition:color .15s, border-color .15s;
+}
+.hero-notice-link:hover{color:var(--cream);border-color:var(--cream)}
+@media (max-width:560px){
+  .hero-notice{margin-top:1.6rem;padding:1.1rem 1.2rem 1.2rem}
+  .hero-notice-kicker{letter-spacing:.22em}
 }
 
 /* Hero footer strip — metadata across the bottom of the photo */
@@ -789,6 +849,44 @@ html[lang="en"] .hours-list li.today .day::after{content:"TODAY"}
   color:var(--muted);
   font-size:1rem;
   max-width:30rem;
+}
+
+.markets-lead{
+  margin:0 0 1.2rem;
+  font-family:"Inter", system-ui, sans-serif;
+  font-size:1rem;
+  line-height:1.55;
+  color:var(--ink-soft);
+  max-width:30rem;
+}
+.markets-list{
+  list-style:none;padding:0;margin:0;
+  max-width:32rem;
+  border-top:1px solid var(--line-soft);
+}
+.markets-list li{
+  display:flex;flex-direction:column;gap:.35rem;
+  padding:1.1rem 0;
+  border-bottom:1px solid var(--line-soft);
+}
+.markets-list li:last-child{border-bottom:0}
+.market-name{
+  font-family:"Playfair Display", serif;
+  font-size:1.5rem;
+  color:var(--ink);
+}
+.market-place{
+  font-family:"DM Mono", monospace;
+  font-size:.72rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+.market-when{
+  font-family:"DM Mono", monospace;
+  font-size:.9rem;
+  letter-spacing:.04em;
+  color:var(--gold-dark);
 }
 
 /* visit */

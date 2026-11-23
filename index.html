@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Pan Bejgl — Bistró Kafe, Vinohrady</title>
-<meta name="description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech. Pan Bejgl, Blanická 772/6, Praha 2.">
+<meta name="description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <link rel="canonical" href="https://panbejgl.cz/">
 
 <meta property="og:title" content="Pan Bejgl — Bistró Kafe">
@@ -36,7 +36,7 @@
 <body>
 
 <!-- Top ribbon -->
-<div class="ribbon" aria-hidden="true">
+<div class="ribbon" id="ribbon" aria-hidden="true">
   <div class="ribbon-track">
     <span><span class="star">✻</span> Bio káva</span>
     <span><span class="star">✻</span> Čerstvé bejgly</span>
@@ -108,6 +108,14 @@
     <h1 class="hero-title">Pan <em>Bejgl</em></h1>
     <p class="hero-tagline" id="hero-tagline">Bio káva, čerstvé bejgly a domácí bábovky</p>
     <p class="hero-subtitle" id="hero-subtitle">káva a snídaně na Vinohradech</p>
+    <div class="hero-notice" id="hero-notice" role="status" hidden>
+      <span class="hero-notice-kicker"><span class="dot"></span><span data-i18n="status.temp_closed">Dočasně zavřeno</span></span>
+      <p class="hero-notice-text" id="hero-notice-text"></p>
+      <span class="hero-notice-foot">
+        <span id="hero-notice-reopen"></span>
+        <a class="hero-notice-link" href="#hours" data-i18n="closure.where">Kde nás najdete</a>
+      </span>
+    </div>
   </div>
   <div class="hero-meta">
     <div>
@@ -204,7 +212,11 @@
       <h2><em data-i18n="hours.title.em">Otevírací</em> <span data-i18n="hours.title">doba</span></h2>
     </div>
     <ul class="hours-list" id="hours-list"></ul>
-    <p class="hours-note" data-i18n="hours.note">
+    <div class="markets" id="markets" hidden>
+      <p class="markets-lead" data-i18n="markets.lead"></p>
+      <ul class="markets-list" id="markets-list"></ul>
+    </div>
+    <p class="hours-note" id="hours-note" data-i18n="hours.note">
       V neděli máme zavřeno — odpočíváme a pečeme na pondělí.
     </p>
   </div>

@@ -14,6 +14,22 @@ Plain HTML + CSS + vanilla JS. No build step. Hosted on GitHub Pages.
 
 You **don't need to touch** `index.html`, `style.css`, or `script.js` for normal updates.
 
+## Closing / reopening the shop
+
+The `status` block in `content.json` switches the whole site into a "temporarily closed" mode:
+
+- `temporarily_closed`: `true` shows the closure notice (ribbon, hero, status pill, "Dnes"), swaps the opening hours for the markets list and drops the hours from Google's structured data. `false` (or no `status` block at all) is the normal open site.
+- `message`: the notice text in the hero, `cs` + `en`.
+- `reopening`: when you reopen, e.g. `"brzy"` / `"soon"` or `"1. března"` / `"1 March"`. Leave it empty to hide the line.
+- `about`: the "O nás" text shown while closed; the normal `about` comes back on reopening.
+- `markets`: where to find us meanwhile. Each entry has `name`, `place` and optional `when` (`cs` + `en`); empty fields are not shown.
+
+To reopen:
+
+1. Set `"temporarily_closed": false` in `content.json` (you can keep the rest of the block for next time).
+2. Put the normal text back into the `<meta name="description">` in `index.html` (static HTML, it can't follow the flag): `Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech. Pan Bejgl, Blanická 772/6, Praha 2.`
+3. In Google Business Profile, switch the listing back from "Temporarily closed" and check the hours.
+
 ## Local preview
 
 The site loads `content.json` over HTTP, so opening `index.html` directly with `file://` won't work. Serve it locally:
