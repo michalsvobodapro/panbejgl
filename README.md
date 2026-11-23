@@ -9,7 +9,8 @@ Plain HTML + CSS + vanilla JS. No build step. Hosted on GitHub Pages.
 
 - Hours: format is `"HH:MM-HH:MM"` (24h) or `"closed"`.
 - Menu prices: just text — `"55 Kč"`, `"od 65 Kč"`, etc.
-- Photos: put files into `images/` and reference them in the `gallery` array.
+- Photos: add them with `tools/photo.sh` (below), which resizes and compresses them into `images/` and appends them to the `gallery` array. To replace a photo, edit its `src` / `caption` in `gallery`.
+- Hero photo: `shop.hero_image`. `index.html` also preloads `images/interier.jpg` so the hero shows sooner; if you change the hero photo, update that `<link rel="preload">` too.
 - Each piece of copy has a `cs` (Czech) and `en` (English) field.
 
 You **don't need to touch** `index.html`, `style.css`, or `script.js` for normal updates.
@@ -51,10 +52,17 @@ The site has no forms, analytics or cookies. Fonts are self-hosted in `fonts/` (
 The site loads `content.json` over HTTP, so opening `index.html` directly with `file://` won't work. Serve it locally:
 
 ```bash
-cd ~/dev/projects/panbejgl
-python3 -m http.server 8000
-# open http://localhost:8000
+cd ~/dev/projects/web/panbejgl
+tools/preview.sh
+# serves on http://localhost:8123 in the background and opens it
+# (or by hand: python3 -m http.server 8123)
 ```
+
+## Tools
+
+- `tools/photo.sh add <file> <slug> "Caption"`: resizes to max 1400 px, compresses, saves `images/<slug>.jpg` and appends it to `gallery`. `add-only` skips `content.json`; `list` prints the gallery.
+- `tools/publish.sh "What changed"`: checks `content.json` is valid JSON (aborts if not), stages **everything** (`git add -A`), commits and pushes the current branch. Run on `main`, that deploys: GitHub Pages rebuilds in about a minute. A phone may need a hard refresh (or `?v=2` on the URL) to show it.
+- To undo a published change: `git log --oneline`, then `git revert <hash>` and publish again.
 
 ## Editing notes
 
@@ -64,29 +72,19 @@ The site is live at `https://panbejgl.cz`. A few things to keep current when edi
 - Google Maps embed: Google Maps → search "Pan Bejgl" → Share → Embed a map → copy `src` into `shop.map_embed_src`.
 - Confirm the IG / FB URLs still point to the live profiles.
 
-## Deploy to GitHub Pages
+## Hosting and domain
 
-1. Create GitHub repo `panbejgl` (public).
-2. Push this folder to it.
-3. Repo → Settings → Pages → Source: `Deploy from a branch` → `main` → `/ (root)`.
-4. Site live at `https://<username>.github.io/panbejgl/` within a minute.
+GitHub Pages serves the `main` branch from `/ (root)` (repo → Settings → Pages). The `CNAME` file holds the custom domain `panbejgl.cz`. At the domain's DNS provider, the records point at GitHub Pages:
 
-## Custom domain (`panbejgl.cz`)
+```
+A      @    185.199.108.153
+A      @    185.199.109.153
+A      @    185.199.110.153
+A      @    185.199.111.153
+CNAME  www  michalsvobodapro.github.io.
+```
 
-1. Register `panbejgl.cz` at [Wedos](https://wedos.cz) (~149 Kč/year, Czech registrar).
-2. In the repo, create a file called `CNAME` (no extension) with one line: `panbejgl.cz`. Commit + push.
-3. In Wedos DNS panel, add records pointing the domain at GitHub Pages:
-
-   ```
-   A    @    185.199.108.153
-   A    @    185.199.109.153
-   A    @    185.199.110.153
-   A    @    185.199.111.153
-   CNAME www  <username>.github.io.
-   ```
-
-4. GitHub repo → Settings → Pages → Custom domain → `panbejgl.cz` → wait for DNS check → tick **Enforce HTTPS**.
-5. Propagation: 10 min – 24 h. Verify with `dig panbejgl.cz`.
+If the domain ever stops resolving, check those records (`dig panbejgl.cz`) and that **Enforce HTTPS** is still ticked in Settings → Pages.
 
 ## Google Business Profile (most important for findability)
 
@@ -108,6 +106,7 @@ style.css              ← visual design
 script.js              ← renders content.json, language toggle, open-now
 images/                ← photos
 fonts/                 ← self-hosted woff2 (latin + latin-ext) + OFL licences
+tools/                 ← preview, photo and publish helpers
 .nojekyll              ← tells GitHub Pages to serve files as-is
-CNAME                  ← (add when domain is registered)
+CNAME                  ← custom domain for GitHub Pages (panbejgl.cz)
 ```

@@ -136,7 +136,7 @@
   --cream:     #fff8e6;
   --ink:       #2a1d12;
   --ink-soft:  #4a3725;
-  --muted:     #8a7252;
+  --muted:     #796448;
   --muted-soft:#b39d7a;
   --gold:      #b97a2e;
   --gold-dark: #8b5520;
@@ -164,6 +164,23 @@ body{
 }
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold-dark);outline-offset:3px}
+.skip-link:focus-visible,
+.hero :focus-visible,
+.pane-visit :focus-visible,
+.footer :focus-visible,
+.lightbox :focus-visible{outline-color:var(--gold-light)}
+#main:focus{outline:none}
+.skip-link{
+  position:absolute;left:1rem;top:0;z-index:200;
+  transform:translateY(-150%);
+  padding:.6rem 1rem;
+  border-radius:0 0 4px 4px;
+  background:var(--ink);color:var(--cream);
+  font-family:"DM Mono", monospace;
+  font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+}
+.skip-link:focus{transform:none}
 ::selection{background:var(--gold);color:var(--cream)}
 
 /* tiny paper-grain noise via SVG, just enough to warm flat areas */
@@ -687,7 +704,8 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   opacity:0;transform:translateY(4px);
   transition:opacity .3s, transform .3s;
 }
-.gallery figure:hover figcaption{opacity:1; transform:translateY(0)}
+.gallery figure:hover figcaption,
+.gallery figure:focus-visible figcaption{opacity:1; transform:translateY(0)}
 
 /* editorial layout — explicit grid placement on 12-col */
 .gallery .g1{ grid-column: span 5; grid-row: span 5; }   /* big square-ish */
@@ -1122,12 +1140,6 @@ html[lang="en"] .hours-list li.today .day::after{content:"TODAY"}
 }
 .map-consent-link:hover{color:var(--cream);border-bottom-color:var(--cream)}
 .map-consent[hidden], .map-consent [hidden]{display:none}
-.map-consent-btn:focus-visible,
-.map-consent-link:focus-visible,
-.map-wrap iframe:focus-visible,
-.footer-link:focus-visible,
-.privacy a:focus-visible,
-.privacy-close:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
 
 /* ========== FOOTER ========== */
 .footer{
@@ -1148,7 +1160,7 @@ html[lang="en"] .hours-list li.today .day::after{content:"TODAY"}
   color:var(--cream);
 }
 .footer .mark img{width:28px;height:28px;border-radius:50%}
-.footer .right{color:var(--muted)}
+.footer .right{color:var(--muted-soft)}
 .footer-link{
   white-space:nowrap;
   color:var(--muted-soft);
@@ -1312,4 +1324,11 @@ html[lang="en"] .hours-list li.today .day::after{content:"TODAY"}
   .lightbox-prev{ left:.5rem; }
   .lightbox-next{ right:.5rem; }
   .lightbox-nav{ width:44px;height:44px;font-size:1.5rem; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .fade-in{opacity:1;transform:none}
+  .gallery figure:hover img{transform:none}
 }

@@ -23,9 +23,10 @@
 <meta name="twitter:image" content="https://panbejgl.cz/images/bagel-snidanovy.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
-<link rel="apple-touch-icon" href="/images/favicon.png">
+<link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+<link rel="preload" href="images/interier.jpg" as="image" fetchpriority="high">
 <link rel="preload" href="fonts/playfair-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/playfair-display-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
@@ -33,6 +34,8 @@
 <script type="application/ld+json" id="ld-business">{}</script>
 </head>
 <body>
+
+<a class="skip-link" href="#main" data-i18n="skip">Přeskočit na obsah</a>
 
 <!-- Top ribbon -->
 <div class="ribbon" id="ribbon" aria-hidden="true">
@@ -53,13 +56,13 @@
 <!-- Header -->
 <header class="header" id="top">
   <div class="header-left">
-    <img class="brand-mark" id="brand-logo" src="images/logo.jpg" alt="Pan Bejgl">
+    <img class="brand-mark" id="brand-logo" src="images/logo.jpg" alt="" width="46" height="46">
     <div class="brand-text">
       <span class="brand-name">Pan Bejgl</span>
       <span class="brand-sub" data-i18n="brand.sub">Bistró Kafe — Praha 2</span>
     </div>
   </div>
-  <nav class="header-center" aria-label="Primary">
+  <nav class="header-center" aria-label="Hlavní navigace" data-i18n-aria="nav.label">
     <a href="#about" data-i18n="nav.about">O nás</a>
     <a href="#menu" data-i18n="nav.menu">Menu</a>
     <a href="#catering" data-i18n="nav.catering">Catering</a>
@@ -70,11 +73,13 @@
     <span class="pill-status" id="pill-status" aria-live="polite">
       <span class="dot"></span><span id="pill-status-text">—</span>
     </span>
-    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Switch language">
+    <button class="lang-toggle" id="lang-toggle" type="button" aria-label="Přepnout do angličtiny" data-i18n-aria="lang.switch">
       <span data-lang="cs">CS</span><span class="sep">/</span><span data-lang="en">EN</span>
     </button>
   </div>
 </header>
+
+<main id="main" tabindex="-1">
 
 <!-- Hero -->
 <section class="hero">
@@ -103,7 +108,7 @@
   </nav>
   <div class="hero-inner">
     <span class="hero-eyebrow"><span class="line"></span><span data-i18n="hero.eyebrow">BLANICKÁ · PRAHA 2 · VINOHRADY</span><span class="line"></span></span>
-    <img class="hero-logo" id="hero-logo" src="images/logo.jpg" alt="">
+    <img class="hero-logo" id="hero-logo" src="images/logo.jpg" alt="" width="130" height="130">
     <h1 class="hero-title">Pan <em>Bejgl</em></h1>
     <p class="hero-tagline" id="hero-tagline">Bio káva, čerstvé bejgly a domácí bábovky</p>
     <p class="hero-subtitle" id="hero-subtitle">káva a snídaně na Vinohradech</p>
@@ -142,7 +147,7 @@
   <p class="pull-text" id="pull-text">
     Malá pekárna a kavárna na Blanické. Pečeme čerstvé bejgly, vaříme bio kávu a&nbsp;domácí polévky.
   </p>
-  <span class="pull-author" data-i18n="pull.byline">Po — Pá · pro lepší rána</span>
+  <span class="pull-author" id="pull-byline">Po — Pá · pro lepší rána</span>
 </section>
 
 <!-- Photo gallery -->
@@ -180,7 +185,7 @@
     </div>
     <div class="menu-grid" id="menu-grid"></div>
     <p class="menu-note" data-i18n="menu.note">
-      Ceny jsou orientační — aktuální nabídku najdete na tabuli v kafi.
+      Ceny jsou orientační — aktuální nabídku najdete na tabuli u nás.
       Cokoliv připravíme i s sebou.
     </p>
   </div>
@@ -215,8 +220,8 @@
       <p class="markets-lead" data-i18n="markets.lead"></p>
       <ul class="markets-list" id="markets-list"></ul>
     </div>
-    <p class="hours-note" id="hours-note" data-i18n="hours.note">
-      V neděli máme zavřeno — odpočíváme a pečeme na pondělí.
+    <p class="hours-note" id="hours-note">
+      O víkendu máme zavřeno — odpočíváme a pečeme na pondělí.
     </p>
   </div>
   <div class="pane pane-visit" id="visit">
@@ -262,12 +267,14 @@
   </div>
 </section>
 
+</main>
+
 <!-- Lightbox -->
-<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Photo viewer">
-  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Close">✕</button>
-  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Previous">‹</button>
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Prohlížeč fotek" data-i18n-aria="lightbox.label">
+  <button class="lightbox-close" id="lightbox-close" type="button" aria-label="Zavřít" data-i18n-aria="lightbox.close">✕</button>
+  <button class="lightbox-nav lightbox-prev" id="lightbox-prev" type="button" aria-label="Předchozí fotka" data-i18n-aria="lightbox.prev">‹</button>
   <img class="lightbox-img" id="lightbox-img" alt="">
-  <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Next">›</button>
+  <button class="lightbox-nav lightbox-next" id="lightbox-next" type="button" aria-label="Další fotka" data-i18n-aria="lightbox.next">›</button>
   <span class="lightbox-counter" id="lightbox-counter"></span>
 </div>
 
@@ -275,7 +282,7 @@
 <footer class="footer">
   <div class="footer-inner">
     <div class="mark">
-      <img id="footer-logo" src="images/logo.jpg" alt="">
+      <img id="footer-logo" src="images/logo.jpg" alt="" width="28" height="28">
       <span>Pan Bejgl Bistró Kafe</span>
     </div>
     <nav class="footer-social" aria-label="Sociální sítě a objednávky">
@@ -307,7 +314,7 @@
 <dialog class="privacy" id="privacy" aria-labelledby="privacy-title">
   <div class="privacy-inner">
     <form method="dialog">
-      <button class="privacy-close" id="privacy-close" type="submit" aria-label="Zavřít">✕</button>
+      <button class="privacy-close" id="privacy-close" type="submit" aria-label="Zavřít" data-i18n-aria="privacy.close">✕</button>
     </form>
     <h2 id="privacy-title"><em data-i18n="privacy.title.em">Ochrana</em> <span data-i18n="privacy.title">soukromí</span></h2>
     <p data-i18n="privacy.intro">Tenhle web je jen naše vizitka. Nemá žádné formuláře, analytiku, reklamu ani sledovací cookies.</p>

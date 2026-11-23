@@ -24,9 +24,7 @@ echo ""
 echo "Committing: $MSG"
 git commit -m "$MSG
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
-
-Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>"
+🤖 Generated with [Claude Code](https://claude.com/claude-code)"
 git push
 echo ""
 echo "Pushed. GitHub Pages will rebuild in ~30-60s."

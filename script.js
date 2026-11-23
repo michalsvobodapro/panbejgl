@@ -20,11 +20,12 @@ const I18N = {
     "menu.kicker": "Sedm kategorií · Asi dvacet pět položek",
     "menu.note": "Ceny jsou orientační — aktuální nabídku najdete na tabuli u nás. Cokoliv připravíme i s sebou.",
     "hours.title.em": "Otevírací", "hours.title": "doba",
-    "hours.note": "V neděli máme zavřeno — odpočíváme a pečeme na pondělí.",
+    "hours.note.sat,sun": "O víkendu máme zavřeno — odpočíváme a pečeme na pondělí.",
+    "hours.note.sun": "V neděli máme zavřeno — odpočíváme a pečeme na pondělí.",
     "visit.title.em": "Najdete", "visit.title": "nás",
     "visit.where": "Vinohrady · Praha 2",
     "visit.phone": "Telefon", "visit.email": "E-mail", "visit.fb.label": "Pan Bejgl Praha",
-    "pull.byline": "Po — Pá · pro lepší rána",
+    "pull.byline": "pro lepší rána",
     "footer.tag": "Pečeno na Vinohradech",
     "status.open": "Otevřeno",
     "status.closed": "Zavřeno",
@@ -37,6 +38,20 @@ const I18N = {
     "closed": "Zavřeno",
     "day.mon": "Pondělí", "day.tue": "Úterý", "day.wed": "Středa", "day.thu": "Čtvrtek",
     "day.fri": "Pátek", "day.sat": "Sobota", "day.sun": "Neděle",
+    "day.mon.short": "Po", "day.tue.short": "Út", "day.wed.short": "St", "day.thu.short": "Čt",
+    "day.fri.short": "Pá", "day.sat.short": "So", "day.sun.short": "Ne",
+    "page.title": "Pan Bejgl — Bistró Kafe, Vinohrady",
+    "page.description": "Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech. Pan Bejgl, Blanická 772/6, Praha 2.",
+    "page.description.closed": "Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.",
+    "og.locale": "cs_CZ",
+    "skip": "Přeskočit na obsah",
+    "nav.label": "Hlavní navigace",
+    "lang.switch": "Přepnout do angličtiny",
+    "ribbon.coffee": "Bio káva", "ribbon.bagels": "Čerstvé bejgly", "ribbon.cakes": "Domácí bábovky",
+    "ribbon.where": "{street}, Vinohrady", "ribbon.open": "Otevřeno {days}",
+    "gallery.open": "Zvětšit fotku: {caption}",
+    "lightbox.label": "Prohlížeč fotek", "lightbox.close": "Zavřít",
+    "lightbox.prev": "Předchozí fotka", "lightbox.next": "Další fotka",
     "status.temp_closed": "Dočasně zavřeno", "status.temp_closed.short": "Zavřeno",
     "nav.hours.closed": "Na trzích",
     "hours.title.em.closed": "Na", "hours.title.closed": "trzích",
@@ -82,11 +97,12 @@ const I18N = {
     "menu.kicker": "Seven categories · About twenty-five items",
     "menu.note": "Prices are indicative — see the chalkboard for today. Everything is available to take away.",
     "hours.title.em": "Opening", "hours.title": "hours",
-    "hours.note": "We're closed Sundays — we rest, and bake for Monday.",
+    "hours.note.sat,sun": "We're closed at weekends — we rest, and bake for Monday.",
+    "hours.note.sun": "We're closed Sundays — we rest, and bake for Monday.",
     "visit.title.em": "Find", "visit.title": "us",
     "visit.where": "Vinohrady · Prague 2",
     "visit.phone": "Phone", "visit.email": "Email", "visit.fb.label": "Pan Bejgl Praha",
-    "pull.byline": "Mon — Fri · for better mornings",
+    "pull.byline": "for better mornings",
     "footer.tag": "Baked in Vinohrady",
     "status.open": "Open now",
     "status.closed": "Closed",
@@ -99,6 +115,20 @@ const I18N = {
     "closed": "Closed",
     "day.mon": "Monday", "day.tue": "Tuesday", "day.wed": "Wednesday", "day.thu": "Thursday",
     "day.fri": "Friday", "day.sat": "Saturday", "day.sun": "Sunday",
+    "day.mon.short": "Mon", "day.tue.short": "Tue", "day.wed.short": "Wed", "day.thu.short": "Thu",
+    "day.fri.short": "Fri", "day.sat.short": "Sat", "day.sun.short": "Sun",
+    "page.title": "Pan Bejgl — Bistro Café, Vinohrady",
+    "page.description": "Organic coffee, fresh bagels and homemade bundt cakes in Vinohrady. Pan Bejgl, Blanická 772/6, Prague 2.",
+    "page.description.closed": "Pan Bejgl at Blanická 772/6, Prague 2, is temporarily closed and will reopen soon. Meanwhile, find us at farmers' markets such as Kulaťák. Organic coffee, fresh bagels and homemade bundt cakes.",
+    "og.locale": "en_US",
+    "skip": "Skip to content",
+    "nav.label": "Main navigation",
+    "lang.switch": "Switch to Czech",
+    "ribbon.coffee": "Organic coffee", "ribbon.bagels": "Fresh bagels", "ribbon.cakes": "Homemade bundt cakes",
+    "ribbon.where": "{street}, Vinohrady", "ribbon.open": "Open {days}",
+    "gallery.open": "Enlarge photo: {caption}",
+    "lightbox.label": "Photo viewer", "lightbox.close": "Close",
+    "lightbox.prev": "Previous photo", "lightbox.next": "Next photo",
     "status.temp_closed": "Temporarily closed", "status.temp_closed.short": "Closed",
     "nav.hours.closed": "Markets",
     "hours.title.em.closed": "At the", "hours.title.closed": "markets",
@@ -132,12 +162,17 @@ const I18N = {
 };
 
 let CONTENT = null;
-let lang = localStorage.getItem("panbejgl.lang") || (navigator.language?.startsWith("cs") ? "cs" : "cs");
+const storedLang = localStorage.getItem("panbejgl.lang");
+let lang = I18N[storedLang] ? storedLang : (/^(cs|sk)(-|$)/i.test(navigator.language || "") ? "cs" : "en");
 
 function t(key, vars = {}) {
   let s = I18N[lang][key] ?? key;
   for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, v);
   return s;
+}
+
+function stateText(key) {
+  return (closure() ? I18N[lang][key + ".closed"] : undefined) ?? I18N[lang][key];
 }
 
 function pickLang(o) {
@@ -167,15 +202,61 @@ function closure() {
   return s?.temporarily_closed ? s : null;
 }
 
+function isOpenDay(k) {
+  const h = CONTENT.hours[k];
+  return !!h && h !== "closed";
+}
+
+// "" unless the open days form one unbroken run, which is the only shape a short label can say truthfully.
+function openDaysLabel(sep) {
+  const open = DAY_KEYS.filter(isOpenDay);
+  const first = DAY_KEYS.indexOf(open[0]);
+  if (!open.length || DAY_KEYS.indexOf(open.at(-1)) - first !== open.length - 1) return "";
+  const short = (k) => t(`day.${k}.short`);
+  return open.length === 1 ? short(open[0]) : `${short(open[0])}${sep}${short(open.at(-1))}`;
+}
+
+function hoursNote() {
+  return I18N[lang][`hours.note.${DAY_KEYS.filter((k) => !isOpenDay(k)).join(",")}`] ?? "";
+}
+
+function renderRibbon(items) {
+  const track = document.querySelector("#ribbon .ribbon-track");
+  track.innerHTML = "";
+  for (let i = 0; i < 4; i++) {
+    items.forEach((text) => {
+      const span = document.createElement("span");
+      const star = document.createElement("span");
+      star.className = "star";
+      star.textContent = "✻";
+      span.append(star, " " + text);
+      track.appendChild(span);
+    });
+  }
+}
+
 function renderStatic() {
   document.documentElement.lang = lang;
   const closed = closure();
 
   document.querySelectorAll("[data-i18n]").forEach((el) => {
-    const k = el.dataset.i18n;
-    const v = (closed ? I18N[lang][k + ".closed"] : undefined) ?? I18N[lang][k];
+    const v = stateText(el.dataset.i18n);
     if (v != null) el.textContent = v;
   });
+  document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
+    const v = I18N[lang][el.dataset.i18nAria];
+    if (v != null) el.setAttribute("aria-label", v);
+  });
+
+  document.title = t("page.title");
+  document.querySelector('meta[name="description"]').content = stateText("page.description");
+  document.querySelector('meta[property="og:locale"]').content = t("og.locale");
+  document.querySelector('meta[property="og:locale:alternate"]').content = I18N[lang === "cs" ? "en" : "cs"]["og.locale"];
+
+  const days = openDaysLabel(" — ");
+  document.getElementById("pull-byline").textContent = closed
+    ? t("pull.byline.closed")
+    : [days, t("pull.byline")].filter(Boolean).join(" · ");
 
   document.getElementById("hero-tagline").textContent = pickLang(CONTENT.tagline);
   document.getElementById("hero-subtitle").textContent = pickLang(CONTENT.subtitle);
@@ -228,6 +309,16 @@ function renderStatic() {
     pill.classList.add("is-closed");
   }
   pill.setAttribute("aria-label", pill.title);
+
+  const shop = CONTENT.shop ?? {};
+  const openDays = openDaysLabel("–");
+  renderRibbon([
+    t("ribbon.coffee"),
+    t("ribbon.bagels"),
+    t("ribbon.cakes"),
+    shop.address_line1 && t("ribbon.where", { street: shop.address_line1 }),
+    openDays && t("ribbon.open", { days: openDays }),
+  ].filter(Boolean));
 }
 
 function renderShop() {
@@ -343,7 +434,6 @@ function renderOperator() {
     controller,
     contact: contactNodes,
   });
-  document.getElementById("privacy-close").setAttribute("aria-label", t("privacy.close"));
 }
 
 function link(href, text) {
@@ -501,8 +591,12 @@ function renderGallery() {
   CONTENT.gallery.forEach((item, i) => {
     const fig = document.createElement("figure");
     fig.className = "g" + (i + 1);
+    fig.tabIndex = 0;
+    fig.setAttribute("role", "button");
+    fig.setAttribute("aria-label", item.caption ? t("gallery.open", { caption: item.caption }) : t("lightbox.label"));
     const img = document.createElement("img");
     img.loading = "lazy";
+    img.decoding = "async";
     img.src = item.src;
     img.alt = item.caption || "";
     const cap = document.createElement("figcaption");
@@ -536,6 +630,9 @@ function renderHours() {
     li.appendChild(hrs);
     list.appendChild(li);
   });
+  const note = document.getElementById("hours-note");
+  note.textContent = hoursNote();
+  note.hidden = !note.textContent;
 }
 
 function renderClosure() {
@@ -556,8 +653,9 @@ function renderClosure() {
   reopen.textContent = when ? t("closure.reopen", { when }) : "";
   reopen.hidden = !when;
 
-  document.getElementById("hours-note").textContent =
-    when ? t("closure.reopen_shop", { when }) : t("closure.reopen_shop_nodate");
+  const note = document.getElementById("hours-note");
+  note.textContent = when ? t("closure.reopen_shop", { when }) : t("closure.reopen_shop_nodate");
+  note.hidden = false;
 
   const list = document.getElementById("markets-list");
   list.innerHTML = "";
@@ -574,24 +672,12 @@ function renderClosure() {
     if (li.childNodes.length) list.appendChild(li);
   });
 
-  const items = [
+  renderRibbon([
     t("status.temp_closed"),
     when && t("closure.reopen", { when }),
     t("closure.markets"),
     ...marketList.map((m) => [pickLang(m.name), pickLang(m.place)].filter(Boolean).join(", ")),
-  ].filter(Boolean);
-  const track = document.querySelector("#ribbon .ribbon-track");
-  track.innerHTML = "";
-  for (let i = 0; i < 4; i++) {
-    items.forEach((text) => {
-      const span = document.createElement("span");
-      const star = document.createElement("span");
-      star.className = "star";
-      star.textContent = "✻";
-      span.append(star, " " + text);
-      track.appendChild(span);
-    });
-  }
+  ].filter(Boolean));
 }
 
 function injectSchema() {
@@ -691,6 +777,7 @@ document.getElementById("gallery-more-btn").addEventListener("click", () => {
   const gallery = document.getElementById("gallery");
   let idx = 0;
   let currentPhotos = [];
+  let opener = null;
 
   function refreshPhotos() {
     const figs = Array.from(gallery.querySelectorAll("figure"));
@@ -708,25 +795,30 @@ document.getElementById("gallery-more-btn").addEventListener("click", () => {
     counter.textContent = `${idx + 1} / ${currentPhotos.length}`;
   }
   function open(i) {
+    opener = document.activeElement;
     refreshPhotos();
     show(i);
     lightbox.classList.add("is-open");
     lightbox.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    document.getElementById("lightbox-close").focus();
   }
   function close() {
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+    opener?.focus();
   }
 
   // Event delegation — works even after gallery re-renders
-  gallery.addEventListener("click", (e) => {
+  function openFrom(e) {
     const fig = e.target.closest("figure");
     if (!fig) return;
-    const figs = Array.from(gallery.querySelectorAll("figure"));
-    open(figs.indexOf(fig));
-  });
+    e.preventDefault();
+    open(Array.from(gallery.querySelectorAll("figure")).indexOf(fig));
+  }
+  gallery.addEventListener("click", openFrom);
+  gallery.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") openFrom(e); });
   document.getElementById("lightbox-close").addEventListener("click", close);
   document.getElementById("lightbox-prev").addEventListener("click", (e) => { e.stopPropagation(); show(idx - 1); });
   document.getElementById("lightbox-next").addEventListener("click", (e) => { e.stopPropagation(); show(idx + 1); });
@@ -736,6 +828,12 @@ document.getElementById("gallery-more-btn").addEventListener("click", () => {
     if (e.key === "Escape") close();
     else if (e.key === "ArrowRight") show(idx + 1);
     else if (e.key === "ArrowLeft") show(idx - 1);
+    else if (e.key === "Tab") {
+      const buttons = Array.from(lightbox.querySelectorAll("button"));
+      const at = buttons.indexOf(document.activeElement);
+      e.preventDefault();
+      buttons[(at + (e.shiftKey ? -1 : 1) + buttons.length) % buttons.length].focus();
+    }
   });
 })();
 
