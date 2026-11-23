@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://panbejgl.cz/">
 
 <meta property="og:title" content="Pan Bejgl — Bistró Kafe">
-<meta property="og:description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech.">
+<meta property="og:description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <meta property="og:type" content="restaurant.restaurant">
 <meta property="og:url" content="https://panbejgl.cz/">
 <meta property="og:image" content="https://panbejgl.cz/images/bagel-snidanovy.jpg">
@@ -19,7 +19,7 @@
 <meta property="og:locale:alternate" content="en_US">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Pan Bejgl — Bistró Kafe">
-<meta name="twitter:description" content="Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech.">
+<meta name="twitter:description" content="Pan Bejgl na Blanické 772/6, Praha 2, je dočasně zavřený a brzy znovu otevře. Mezitím ho najdete na farmářských trzích, třeba na Kulaťáku. Bio káva, čerstvé bejgly a domácí bábovky.">
 <meta name="twitter:image" content="https://panbejgl.cz/images/bagel-snidanovy.jpg">
 
 <link rel="icon" href="/favicon.ico" sizes="any">
@@ -164,7 +164,7 @@
     </div>
     <div class="gallery" id="gallery"></div>
     <div class="gallery-more">
-      <button id="gallery-more-btn" type="button">
+      <button id="gallery-more-btn" type="button" aria-controls="gallery" aria-expanded="false">
         <span id="gallery-more-label" data-i18n="gallery.more">Zobrazit více fotek</span>
       </button>
     </div>
@@ -217,7 +217,7 @@
     </div>
     <ul class="hours-list" id="hours-list"></ul>
     <div class="markets" id="markets" hidden>
-      <p class="markets-lead" data-i18n="markets.lead"></p>
+      <p class="markets-lead" id="markets-lead" data-i18n="markets.lead">Než znovu otevřeme, najdete nás na farmářských trzích, třeba tady:</p>
       <ul class="markets-list" id="markets-list"></ul>
       <img class="markets-photo" src="images/pecivo-1.jpg" alt="" width="1100" height="825" loading="lazy" decoding="async">
     </div>
@@ -238,11 +238,11 @@
     <div class="contact-grid">
       <div class="contact-item">
         <span class="label" data-i18n="visit.phone">Telefon</span>
-        <a id="visit-phone" href="#">—</a>
+        <a id="visit-phone" href="tel:+420733733519">+420 733 733 519</a>
       </div>
       <div class="contact-item">
         <span class="label" data-i18n="visit.email">E-mail</span>
-        <a id="visit-email" href="#">—</a>
+        <a id="visit-email" href="mailto:jana-sookol@seznam.cz">jana-sookol@seznam.cz</a>
       </div>
       <div class="contact-item">
         <span class="label">Instagram</span>
@@ -319,12 +319,12 @@
     </form>
     <h2 id="privacy-title"><em data-i18n="privacy.title.em">Ochrana</em> <span data-i18n="privacy.title">soukromí</span></h2>
     <p data-i18n="privacy.intro">Tenhle web je jen naše vizitka. Nemá žádné formuláře, analytiku, reklamu ani sledovací cookies.</p>
-    <p data-i18n="privacy.storage"></p>
-    <p><span data-i18n="privacy.hosting"></span> <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" data-i18n="privacy.hosting.link"></a></p>
-    <p><span data-i18n="privacy.map"></span> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" data-i18n="privacy.map.link"></a></p>
-    <p data-i18n="privacy.contact"></p>
-    <p id="privacy-controller"></p>
-    <p><span data-i18n="privacy.complaint"></span> <a href="https://uoou.gov.cz" target="_blank" rel="noopener">uoou.gov.cz</a>.</p>
+    <p data-i18n="privacy.storage">Ve vašem prohlížeči si web pamatuje jen to, jestli ho chcete česky, nebo anglicky (v místním úložišti, tzv. local storage). Nikam se to neodesílá a smazat to můžete v nastavení prohlížeče.</p>
+    <p><span data-i18n="privacy.hosting">Web běží na GitHub Pages. Jejich provozovatel, společnost GitHub, při doručování stránek zpracovává technické údaje, jako je IP adresa, ve svých serverových záznamech.</span> <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" data-i18n="privacy.hosting.link">Zásady ochrany soukromí GitHubu</a></p>
+    <p><span data-i18n="privacy.map">Mapa od Googlu se načte, až když kliknete na „Zobrazit mapu“ (nebo otevřete odkaz do Google Maps). Teprve pak se váš prohlížeč spojí s Googlem a platí jeho podmínky a zásady ochrany soukromí.</span> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" data-i18n="privacy.map.link">Zásady ochrany soukromí Googlu</a></p>
+    <p data-i18n="privacy.contact">Když nám zavoláte nebo napíšete e-mail, použijeme vaše kontaktní údaje jen k vyřízení vašeho dotazu.</p>
+    <p id="privacy-controller">Správcem vašich údajů je Pan Bejgl Bistró Kafe. Ozvat se nám můžete na <a href="mailto:jana-sookol@seznam.cz">jana-sookol@seznam.cz</a> nebo <a href="tel:+420733733519">+420 733 733 519</a>.</p>
+    <p><span data-i18n="privacy.complaint">Pokud máte pocit, že s vašimi údaji nezacházíme správně, můžete si stěžovat u Úřadu pro ochranu osobních údajů (ÚOOÚ):</span> <a href="https://uoou.gov.cz" target="_blank" rel="noopener">uoou.gov.cz</a>.</p>
   </div>
 </dialog>
 

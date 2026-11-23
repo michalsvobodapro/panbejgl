@@ -28,4 +28,4 @@ git commit -m "$MSG
 git push
 echo ""
 echo "Pushed. GitHub Pages will rebuild in ~30-60s."
-echo "Live URL: https://michalsvobodapro.github.io/panbejgl/"
+echo "Live URL: https://panbejgl.cz"

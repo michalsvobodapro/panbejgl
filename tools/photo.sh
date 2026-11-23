@@ -36,7 +36,7 @@ compress_into_images() {
   local dst="images/${slug}.jpg"
   cp "$src" "$dst"
   # sips' quality scale runs high: 40 here matches the libjpeg ~70 the gallery photos use; sips 70 is ~90 and 30-50% larger.
-  sips -Z 1400 -s formatOptions 40 "$dst" > /dev/null
+  sips -Z 1400 -s format jpeg -s formatOptions 40 "$dst" > /dev/null
   echo "→ Saved: $dst ($(du -h "$dst" | cut -f1))"
 }
 

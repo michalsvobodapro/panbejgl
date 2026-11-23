@@ -184,6 +184,8 @@ a{color:inherit;text-decoration:none}
   font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
 }
 .skip-link:focus{transform:none}
+/* Inset so the ring sits on the link's own ink fill: outside, it straddles the dark ribbon and the cream header, and no single colour reads on both. */
+.skip-link:focus-visible{outline-offset:-4px}
 ::selection{background:var(--gold-dark);color:var(--cream)}
 html{scrollbar-color:var(--muted-soft) var(--bg);accent-color:var(--gold-dark);caret-color:var(--gold-dark)}
 
@@ -238,9 +240,7 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   align-items:center;
   gap:1.5rem;
   padding:1rem var(--pad);
-  background:rgba(245,234,208,.78);
-  backdrop-filter:saturate(140%) blur(14px);
-  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  background:var(--bg);
   border-bottom:1px solid var(--line-soft);
 }
 .header-left{display:flex;align-items:center;gap:.85rem}
@@ -482,9 +482,8 @@ h1,h2,h3,h4{font-family:"Playfair Display", Georgia, serif; font-weight:700; mar
   max-width:46rem;
   line-height:1.4;
   text-wrap:balance;
-  /* Reserve enough vertical space so language toggle doesn't shift layout
-     when text wraps differently. 2 lines on desktop, 3 on narrow mobile
-     in case the longer translation wraps more aggressively. */
+  /* Below 1000px, reserve two lines so the language toggle doesn't shift
+     the layout when the translations wrap differently. */
   min-height:calc(1.4em * 2);
 }
 @media (min-width:1000px){
@@ -1120,6 +1119,14 @@ html[lang="en"] .hours-list li.today .day::after{content:"TODAY"}
   color:var(--ink-soft);
   max-width:28rem;
 }
+.load-error{
+  margin-top:1.5rem;
+  max-width:36rem;
+  color:var(--cream);
+  font-size:1rem;
+  line-height:1.5;
+}
+.load-error a{text-decoration:underline}
 .markets-list{
   list-style:none;padding:0;margin:0;
   max-width:34rem;

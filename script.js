@@ -1,6 +1,5 @@
 // Pan Bejgl — site logic.
 // Loads content.json (single source of truth) and renders the design.
-// Adapted from the Claude Design handoff, keeping fetch-from-JSON flow.
 
 const DAY_KEYS = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
 
@@ -78,9 +77,12 @@ const I18N = {
     "privacy.map": "Mapa od Googlu se načte, až když kliknete na „Zobrazit mapu“ (nebo otevřete odkaz do Google Maps). Teprve pak se váš prohlížeč spojí s Googlem a platí jeho podmínky a zásady ochrany soukromí.",
     "privacy.map.link": "Zásady ochrany soukromí Googlu",
     "privacy.contact": "Když nám zavoláte nebo napíšete e-mail, použijeme vaše kontaktní údaje jen k vyřízení vašeho dotazu.",
-    "privacy.controller": "Správcem vašich údajů je {controller}. Ozvat se nám můžete na {contact}.",
+    "privacy.controller": "Správcem vašich údajů je {controller}.",
+    "privacy.reach": "Ozvat se nám můžete na {contact}.",
     "privacy.or": " nebo ",
     "privacy.complaint": "Pokud máte pocit, že s vašimi údaji nezacházíme správně, můžete si stěžovat u Úřadu pro ochranu osobních údajů (ÚOOÚ):",
+    "load.failed": "Stránku se nepodařilo celou načíst.",
+    "load.call": "Zavolejte nám na {phone}.",
   },
   en: {
     "brand.sub": "Bistro Café — Prague 2",
@@ -155,19 +157,32 @@ const I18N = {
     "privacy.map": "The Google map loads only when you click “Show map” (or open the Google Maps link). Only then does your browser connect to Google, and Google's own terms and privacy policy apply.",
     "privacy.map.link": "Google's privacy policy",
     "privacy.contact": "If you phone or email us, we use your contact details only to handle your enquiry.",
-    "privacy.controller": "The controller of your data is {controller}. You can reach us at {contact}.",
+    "privacy.controller": "The controller of your data is {controller}.",
+    "privacy.reach": "You can reach us at {contact}.",
     "privacy.or": " or ",
     "privacy.complaint": "If you feel we're not handling your data properly, you can complain to the Czech data protection authority (ÚOOÚ):",
+    "load.failed": "The page didn't load completely.",
+    "load.call": "Call us on {phone}.",
   },
 };
 
 let CONTENT = null;
-const storedLang = localStorage.getItem("panbejgl.lang");
+const LANG_KEY = "panbejgl.lang";
+
+function readStoredLang() {
+  try { return localStorage.getItem(LANG_KEY); } catch { return null; }
+}
+
+function storeLang(value) {
+  try { localStorage.setItem(LANG_KEY, value); } catch { /* storage blocked: the choice just isn't remembered */ }
+}
+
+const storedLang = readStoredLang();
 let lang = I18N[storedLang] ? storedLang : (/^(cs|sk)(-|$)/i.test(navigator.language || "") ? "cs" : "en");
 
 function t(key, vars = {}) {
   let s = I18N[lang][key] ?? key;
-  for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, v);
+  for (const [k, v] of Object.entries(vars)) s = s.replace(`{${k}}`, () => v);
   return s;
 }
 
@@ -176,7 +191,7 @@ function stateText(key) {
 }
 
 function pickLang(o) {
-  return typeof o === "string" ? o : (o?.[lang] ?? o?.cs ?? o?.en ?? "");
+  return typeof o === "string" ? o : ([o?.[lang], o?.cs, o?.en].find(Boolean) ?? "");
 }
 
 function parseHHMM(s) {
@@ -184,12 +199,11 @@ function parseHHMM(s) {
   return h * 60 + m;
 }
 
-function computeOpenStatus(hours, now = new Date()) {
+function computeOpenStatus(now = new Date()) {
   const idx = (now.getDay() + 6) % 7;
-  const key = DAY_KEYS[idx];
-  const h = hours[key];
+  const h = dayHours(DAY_KEYS[idx]);
   const mins = now.getHours() * 60 + now.getMinutes();
-  if (h && h !== "closed") {
+  if (h) {
     const [open, close] = h.split("-").map(parseHHMM);
     if (mins >= open && mins < close) return { open: true, closes: h.split("-")[1] };
     if (mins < open) return { open: false, opensAt: h.split("-")[0] };
@@ -199,12 +213,16 @@ function computeOpenStatus(hours, now = new Date()) {
 
 function closure() {
   const s = CONTENT.status;
-  return s?.temporarily_closed ? s : null;
+  return s?.temporarily_closed === true ? s : null;
+}
+
+function dayHours(k) {
+  const h = CONTENT.hours[k];
+  return typeof h === "string" && /^\d{2}:\d{2}-\d{2}:\d{2}$/.test(h) ? h : null;
 }
 
 function isOpenDay(k) {
-  const h = CONTENT.hours[k];
-  return !!h && h !== "closed";
+  return !!dayHours(k);
 }
 
 // "" unless the open days form one unbroken run, which is the only shape a short label can say truthfully.
@@ -249,7 +267,10 @@ function renderStatic() {
   });
 
   document.title = t("page.title");
-  document.querySelector('meta[name="description"]').content = stateText("page.description");
+  const description = stateText("page.description");
+  document.querySelector('meta[name="description"]').content = description;
+  document.querySelector('meta[property="og:description"]').content = description;
+  document.querySelector('meta[name="twitter:description"]').content = description;
   document.querySelector('meta[property="og:locale"]').content = t("og.locale");
   document.querySelector('meta[property="og:locale:alternate"]').content = I18N[lang === "cs" ? "en" : "cs"]["og.locale"];
 
@@ -287,13 +308,11 @@ function renderStatic() {
 
   const idx = (new Date().getDay() + 6) % 7;
   const todayKey = DAY_KEYS[idx];
-  const todayHours = CONTENT.hours[todayKey];
-  document.getElementById("hero-today").textContent =
-    (todayHours && todayHours !== "closed") ? todayHours : t("closed");
+  document.getElementById("hero-today").textContent = dayHours(todayKey) ?? t("closed");
 
   const pill = document.getElementById("pill-status");
   const txt = document.getElementById("pill-status-text");
-  const s = computeOpenStatus(CONTENT.hours);
+  const s = computeOpenStatus();
   pill.classList.remove("is-open", "is-closed");
   if (s.open) {
     txt.textContent = t("status.open");
@@ -328,9 +347,7 @@ function renderShop() {
     document.getElementById("brand-logo").src = shop.logo;
     document.getElementById("hero-logo").src = shop.logo;
     document.getElementById("footer-logo").src = shop.logo;
-    // NOTE: the favicon is intentionally NOT set from shop.logo. The
-    // declared /favicon.ico + favicon.png (square, crawler-friendly)
-    // must stay authoritative for search-result site icons.
+    // The favicon stays the declared square files, not shop.logo: search results use them as the site icon.
   }
   if (shop.hero_image) {
     document.getElementById("hero-bg").style.backgroundImage = `url("${shop.hero_image}")`;
@@ -362,9 +379,6 @@ function renderShop() {
     document.getElementById("visit-fb").href = shop.facebook;
   }
 
-  // Social/delivery icons — wires every [data-social] link (hero + footer
-  // copies) from one map. Each shows only when its URL is set, so Bolt Food
-  // stays hidden until shop.bolt_food is filled in content.json.
   const social = {
     instagram: [shop.instagram, "social.instagram"],
     facebook: [shop.facebook, "social.facebook"],
@@ -398,12 +412,13 @@ function renderShop() {
 }
 
 function loadMap() {
-  const shop = CONTENT.shop;
+  const src = CONTENT?.shop?.map_embed_src;
+  if (!src) return;
   const iframe = document.createElement("iframe");
   iframe.id = "map-iframe";
-  iframe.src = shop.map_embed_src;
+  iframe.src = src;
   iframe.title = t("map.title", { address: document.getElementById("map-address").textContent });
-  iframe.referrerPolicy = "no-referrer-when-downgrade";
+  iframe.referrerPolicy = "strict-origin-when-cross-origin";
   document.getElementById("map-consent").hidden = true;
   document.getElementById("map-wrap").append(iframe);
   iframe.focus();
@@ -430,7 +445,8 @@ function renderOperator() {
   if (shop.email) contacts.push(link(`mailto:${shop.email}`, shop.email));
   if (shop.phone) contacts.push(link(`tel:${shop.phone.replace(/\s+/g, "")}`, shop.phone));
   const contactNodes = contacts.flatMap((a, i) => (i ? [t("privacy.or"), a] : [a]));
-  fillTemplate(document.getElementById("privacy-controller"), t("privacy.controller"), {
+  const template = contacts.length ? `${t("privacy.controller")} ${t("privacy.reach")}` : t("privacy.controller");
+  fillTemplate(document.getElementById("privacy-controller"), template, {
     controller,
     contact: contactNodes,
   });
@@ -528,7 +544,7 @@ function renderCatering() {
     const wrap = document.createElement("details");
     wrap.className = "menu-cat";
     wrap.dataset.catIdx = String(i);
-    wrap.open = true;                       // only 3 groups — show all (přehledně)
+    wrap.open = true;
 
     const head = document.createElement("summary");
     head.className = "menu-cat-head";
@@ -620,8 +636,8 @@ function renderHours() {
   DAY_KEYS.forEach((k, i) => {
     const li = document.createElement("li");
     if (i === todayIdx) li.classList.add("today");
-    const h = CONTENT.hours[k];
-    const isClosed = !h || h === "closed";
+    const h = dayHours(k);
+    const isClosed = !h;
     if (isClosed) li.classList.add("closed");
     const day = document.createElement("span");
     day.className = "day";
@@ -677,6 +693,8 @@ function renderClosure() {
     });
     if (li.childNodes.length) list.appendChild(li);
   });
+  list.hidden = !list.children.length;
+  document.getElementById("markets-lead").hidden = list.hidden;
 
   renderRibbon([
     t("status.temp_closed"),
@@ -693,10 +711,11 @@ function injectSchema() {
     mon: "Monday", tue: "Tuesday", wed: "Wednesday", thu: "Thursday",
     fri: "Friday", sat: "Saturday", sun: "Sunday",
   };
+  // Google's LocalBusiness docs mark a day closed with opens = closes = "00:00"; schema.org has no "temporarily closed" status.
   const openingSpecs = DAY_KEYS
-    .filter((k) => CONTENT.hours[k] && CONTENT.hours[k] !== "closed")
+    .filter((k) => closed || isOpenDay(k))
     .map((k) => {
-      const [open, close] = CONTENT.hours[k].split("-");
+      const [open, close] = closed ? ["00:00", "00:00"] : dayHours(k).split("-");
       return { "@type": "OpeningHoursSpecification", dayOfWeek: dayNames[k], opens: open, closes: close };
     });
   const ld = {
@@ -715,19 +734,12 @@ function injectSchema() {
     },
     telephone: s.phone,
     email: s.email,
-    openingHoursSpecification: closed ? undefined : openingSpecs,
+    openingHoursSpecification: openingSpecs,
     sameAs: [s.instagram, s.facebook].filter(Boolean),
   };
   if (closed) {
     const message = closed.message?.cs || pickLang(closed.message);
     if (message) ld.description = message;
-    // Google documents a closed day as opens = closes = "00:00"; there is no schema.org "temporarily closed" status.
-    ld.specialOpeningHoursSpecification = {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: Object.values(dayNames),
-      opens: "00:00",
-      closes: "00:00",
-    };
   }
   document.getElementById("ld-business").textContent = JSON.stringify(ld);
 }
@@ -747,7 +759,7 @@ function renderAll() {
 document.getElementById("year").textContent = new Date().getFullYear();
 document.getElementById("lang-toggle").addEventListener("click", () => {
   lang = lang === "cs" ? "en" : "cs";
-  localStorage.setItem("panbejgl.lang", lang);
+  storeLang(lang);
   renderAll();
 });
 
@@ -755,6 +767,7 @@ document.getElementById("map-load").addEventListener("click", loadMap);
 
 (() => {
   const dialog = document.getElementById("privacy");
+  if (typeof dialog.showModal !== "function") return;
   const open = () => { if (!dialog.open) dialog.showModal(); };
   document.getElementById("privacy-open").addEventListener("click", (e) => {
     e.preventDefault();
@@ -771,6 +784,7 @@ document.getElementById("gallery-more-btn").addEventListener("click", () => {
   const gallery = document.querySelector(".gallery");
   const label = document.getElementById("gallery-more-label");
   const expanded = gallery.classList.toggle("expanded");
+  document.getElementById("gallery-more-btn").setAttribute("aria-expanded", String(expanded));
   label.dataset.i18n = expanded ? "gallery.less" : "gallery.more";
   label.textContent = t(label.dataset.i18n);
 });
@@ -846,7 +860,11 @@ document.getElementById("gallery-more-btn").addEventListener("click", () => {
 fetch("content.json")
   .then((r) => r.json())
   .then((data) => {
-    CONTENT = data;
+    CONTENT = {
+      ...data,
+      hours: data?.hours && typeof data.hours === "object" ? data.hours : {},
+      menu: Array.isArray(data?.menu) ? data.menu : [],
+    };
     renderAll();
 
     const io = new IntersectionObserver((entries) => {
@@ -868,7 +886,13 @@ fetch("content.json")
       });
   })
   .catch((err) => {
-    console.error("Failed to load content.json", err);
-    document.querySelector(".hero-inner").innerHTML =
-      "<p style='color:#fff;padding:2rem;text-align:center'>Content failed to load. Serve via a local web server (e.g. <code>python3 -m http.server</code>), not <code>file://</code>.</p>";
+    console.error("Failed to load content.json. Serve the site over HTTP (e.g. python3 -m http.server), not file://.", err);
+    const phone = document.getElementById("visit-phone");
+    const msg = document.createElement("p");
+    msg.className = "load-error";
+    msg.setAttribute("role", "alert");
+    const href = phone.getAttribute("href");
+    const template = href.startsWith("tel:") ? `${t("load.failed")} ${t("load.call")}` : t("load.failed");
+    fillTemplate(msg, template, { phone: link(href, phone.textContent) });
+    document.querySelector(".hero-inner").append(msg);
   });
