@@ -30,6 +30,22 @@ To reopen:
 2. Put the normal text back into the `<meta name="description">` in `index.html` (static HTML, it can't follow the flag): `Bio káva, čerstvé bejgly a domácí bábovky na Vinohradech. Pan Bejgl, Blanická 772/6, Praha 2.`
 3. In Google Business Profile, switch the listing back from "Temporarily closed" and check the hours.
 
+## Operator details (legal footer)
+
+Czech law (Civil Code § 435) requires a business website to show who runs it. Fill the `operator` block in `content.json`:
+
+- `legal_name`: the business owner's legal name, i.e. the person's full name for a sole trader (OSVČ) or the company name (e.g. `… s.r.o.`).
+- `registered_address`: the registered seat (sídlo / místo podnikání) as written in the register, which may differ from the shop address.
+- `ico`: the 8-digit IČO.
+- `dic`: the DIČ (`CZ…`), only if VAT-registered; leave it empty otherwise.
+- `register_entry`: the register line, `cs` + `en`, e.g. `"Zapsáno v živnostenském rejstříku"` / `"Registered in the Trade Register"` for a sole trader, or `"Zapsáno v obchodním rejstříku vedeném Městským soudem v Praze, oddíl C, vložka 12345"` for a company.
+
+Empty fields are skipped. While the whole block is empty, the footer shows no legal line and the privacy note names the trade name (`shop.full_name`) as the controller. Once `legal_name` is filled, the privacy note uses it, together with the address and IČO.
+
+## Privacy
+
+The site has no forms, analytics or cookies. Fonts are self-hosted in `fonts/` (OFL, licence texts alongside), and the Google map loads only after the visitor clicks "Zobrazit mapu". That is why there's no cookie banner. The privacy note (footer link "Ochrana soukromí") describes exactly this, so update its text in `script.js` (`privacy.*` keys) if you ever add a third-party embed, analytics or a form.
+
 ## Local preview
 
 The site loads `content.json` over HTTP, so opening `index.html` directly with `file://` won't work. Serve it locally:
@@ -91,6 +107,7 @@ index.html             ← page structure (rarely edited)
 style.css              ← visual design
 script.js              ← renders content.json, language toggle, open-now
 images/                ← photos
+fonts/                 ← self-hosted woff2 (latin + latin-ext) + OFL licences
 .nojekyll              ← tells GitHub Pages to serve files as-is
 CNAME                  ← (add when domain is registered)
 ```

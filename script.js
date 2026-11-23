@@ -48,6 +48,24 @@ const I18N = {
     "closure.markets": "Najdete nás na farmářských trzích",
     "closure.where": "Kde nás najdete",
     "markets.lead": "Než znovu otevřeme, najdete nás na farmářských trzích, třeba tady:",
+    "map.load": "Zobrazit mapu",
+    "map.note": "Načte obsah ze služby Google Maps, kde platí zásady Googlu.",
+    "map.open": "Otevřít v Google Maps",
+    "map.title": "Mapa: Pan Bejgl, {address}",
+    "operator.label": "Provozovatel:", "operator.ico": "IČO", "operator.dic": "DIČ",
+    "privacy.link": "Ochrana soukromí",
+    "privacy.close": "Zavřít",
+    "privacy.title.em": "Ochrana", "privacy.title": "soukromí",
+    "privacy.intro": "Tenhle web je jen naše vizitka. Nemá žádné formuláře, analytiku, reklamu ani sledovací cookies.",
+    "privacy.storage": "Ve vašem prohlížeči si web pamatuje jen to, jestli ho chcete česky, nebo anglicky (v místním úložišti, tzv. local storage). Nikam se to neodesílá a smazat to můžete v nastavení prohlížeče.",
+    "privacy.hosting": "Web běží na GitHub Pages. Jejich provozovatel, společnost GitHub, při doručování stránek zpracovává technické údaje, jako je IP adresa, ve svých serverových záznamech.",
+    "privacy.hosting.link": "Zásady ochrany soukromí GitHubu",
+    "privacy.map": "Mapa od Googlu se načte, až když kliknete na „Zobrazit mapu“ (nebo otevřete odkaz do Google Maps). Teprve pak se váš prohlížeč spojí s Googlem a platí jeho podmínky a zásady ochrany soukromí.",
+    "privacy.map.link": "Zásady ochrany soukromí Googlu",
+    "privacy.contact": "Když nám zavoláte nebo napíšete e-mail, použijeme vaše kontaktní údaje jen k vyřízení vašeho dotazu.",
+    "privacy.controller": "Správcem vašich údajů je {controller}. Ozvat se nám můžete na {contact}.",
+    "privacy.or": " nebo ",
+    "privacy.complaint": "Pokud máte pocit, že s vašimi údaji nezacházíme správně, můžete si stěžovat u Úřadu pro ochranu osobních údajů (ÚOOÚ):",
   },
   en: {
     "brand.sub": "Bistro Café — Prague 2",
@@ -92,6 +110,24 @@ const I18N = {
     "closure.markets": "Find us at farmers' markets",
     "closure.where": "Where to find us",
     "markets.lead": "Until we reopen, you'll find us at farmers' markets, including:",
+    "map.load": "Show map",
+    "map.note": "Loads content from Google Maps, where Google's privacy policy applies.",
+    "map.open": "Open in Google Maps",
+    "map.title": "Map: Pan Bejgl, {address}",
+    "operator.label": "Operator:", "operator.ico": "Company ID", "operator.dic": "VAT ID",
+    "privacy.link": "Privacy",
+    "privacy.close": "Close",
+    "privacy.title.em": "Your", "privacy.title": "privacy",
+    "privacy.intro": "This website is just our calling card. It has no forms, analytics, advertising or tracking cookies.",
+    "privacy.storage": "Your browser remembers only whether you want the site in Czech or English (in local storage). It isn't sent anywhere, and you can clear it in your browser settings.",
+    "privacy.hosting": "The site is hosted on GitHub Pages. Its operator, GitHub, processes technical data such as IP addresses in its server logs to deliver the site.",
+    "privacy.hosting.link": "GitHub's privacy statement",
+    "privacy.map": "The Google map loads only when you click “Show map” (or open the Google Maps link). Only then does your browser connect to Google, and Google's own terms and privacy policy apply.",
+    "privacy.map.link": "Google's privacy policy",
+    "privacy.contact": "If you phone or email us, we use your contact details only to handle your enquiry.",
+    "privacy.controller": "The controller of your data is {controller}. You can reach us at {contact}.",
+    "privacy.or": " or ",
+    "privacy.complaint": "If you feel we're not handling your data properly, you can complain to the Czech data protection authority (ÚOOÚ):",
   },
 };
 
@@ -259,9 +295,67 @@ function renderShop() {
     nav.setAttribute("aria-label", t("social.nav"));
   });
 
-  if (shop.map_embed_src) {
-    document.getElementById("map-iframe").src = shop.map_embed_src;
-  }
+  const address = [shop.address_line1, shop.address_line2].filter(Boolean).join(", ");
+  document.getElementById("map-address").textContent = address;
+  document.getElementById("map-load").hidden = !shop.map_embed_src;
+  document.getElementById("map-note").hidden = !shop.map_embed_src;
+  const mapLink = document.getElementById("map-link");
+  mapLink.hidden = !shop.map_link;
+  if (shop.map_link) mapLink.href = shop.map_link;
+  const iframe = document.getElementById("map-iframe");
+  if (iframe) iframe.title = t("map.title", { address });
+}
+
+function loadMap() {
+  const shop = CONTENT.shop;
+  const iframe = document.createElement("iframe");
+  iframe.id = "map-iframe";
+  iframe.src = shop.map_embed_src;
+  iframe.title = t("map.title", { address: document.getElementById("map-address").textContent });
+  iframe.referrerPolicy = "no-referrer-when-downgrade";
+  document.getElementById("map-consent").hidden = true;
+  document.getElementById("map-wrap").append(iframe);
+  iframe.focus();
+}
+
+function renderOperator() {
+  const op = CONTENT.operator ?? {};
+  const shop = CONTENT.shop ?? {};
+  const parts = [
+    op.legal_name,
+    op.registered_address,
+    op.ico && `${t("operator.ico")}\u00a0${op.ico}`,
+    op.dic && `${t("operator.dic")}\u00a0${op.dic}`,
+    pickLang(op.register_entry),
+  ].filter(Boolean);
+  const legal = document.getElementById("footer-legal");
+  legal.hidden = !parts.length;
+  legal.textContent = parts.length ? `${t("operator.label")} ${parts.join(" · ")}` : "";
+
+  const controller = op.legal_name
+    ? [op.legal_name, op.registered_address, op.ico && `${t("operator.ico")}\u00a0${op.ico}`].filter(Boolean).join(", ")
+    : (shop.full_name || shop.name);
+  const contacts = [];
+  if (shop.email) contacts.push(link(`mailto:${shop.email}`, shop.email));
+  if (shop.phone) contacts.push(link(`tel:${shop.phone.replace(/\s+/g, "")}`, shop.phone));
+  const contactNodes = contacts.flatMap((a, i) => (i ? [t("privacy.or"), a] : [a]));
+  fillTemplate(document.getElementById("privacy-controller"), t("privacy.controller"), {
+    controller,
+    contact: contactNodes,
+  });
+  document.getElementById("privacy-close").setAttribute("aria-label", t("privacy.close"));
+}
+
+function link(href, text) {
+  const a = document.createElement("a");
+  a.href = href;
+  a.textContent = text;
+  return a;
+}
+
+function fillTemplate(el, template, vars) {
+  const nodes = template.split(/\{(\w+)\}/).flatMap((piece, i) => (i % 2 ? vars[piece] ?? [] : [piece]));
+  el.replaceChildren(...nodes);
 }
 
 function renderMenu() {
@@ -554,6 +648,7 @@ function renderAll() {
   renderCatering();
   renderHours();
   renderClosure();
+  renderOperator();
   injectSchema();
 }
 
@@ -563,6 +658,22 @@ document.getElementById("lang-toggle").addEventListener("click", () => {
   localStorage.setItem("panbejgl.lang", lang);
   renderAll();
 });
+
+document.getElementById("map-load").addEventListener("click", loadMap);
+
+(() => {
+  const dialog = document.getElementById("privacy");
+  const open = () => { if (!dialog.open) dialog.showModal(); };
+  document.getElementById("privacy-open").addEventListener("click", (e) => {
+    e.preventDefault();
+    open();
+  });
+  dialog.addEventListener("click", (e) => { if (e.target === dialog) dialog.close(); });
+  dialog.addEventListener("close", () => {
+    if (location.hash === "#privacy") history.replaceState(null, "", location.pathname + location.search);
+  });
+  if (location.hash === "#privacy") open();
+})();
 
 document.getElementById("gallery-more-btn").addEventListener("click", () => {
   const gallery = document.querySelector(".gallery");

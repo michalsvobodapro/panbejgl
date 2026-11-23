@@ -26,9 +26,8 @@
 <link rel="icon" type="image/png" sizes="512x512" href="/images/favicon.png">
 <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192.png">
 <link rel="apple-touch-icon" href="/images/favicon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Inter:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="preload" href="fonts/playfair-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/playfair-display-latin-400-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="style.css">
 
 <script type="application/ld+json" id="ld-business">{}</script>
@@ -248,8 +247,17 @@
         <a id="visit-fb" href="#" target="_blank" rel="noopener" data-i18n="visit.fb.label">Pan Bejgl Praha</a>
       </div>
     </div>
-    <div class="map-wrap">
-      <iframe id="map-iframe" src="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Map"></iframe>
+    <div class="map-wrap" id="map-wrap">
+      <div class="map-consent" id="map-consent">
+        <svg class="map-consent-pin" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path>
+          <circle cx="12" cy="10" r="2.4"></circle>
+        </svg>
+        <p class="map-consent-address" id="map-address">Blanická 772/6, 120 00 Praha 2 – Vinohrady</p>
+        <button class="map-consent-btn" id="map-load" type="button" data-i18n="map.load">Zobrazit mapu</button>
+        <p class="map-consent-note" id="map-note" data-i18n="map.note">Načte obsah ze služby Google Maps, kde platí zásady Googlu.</p>
+        <a class="map-consent-link" id="map-link" href="#" target="_blank" rel="noopener" data-i18n="map.open">Otevřít v Google Maps</a>
+      </div>
     </div>
   </div>
 </section>
@@ -291,9 +299,26 @@
         </svg>
       </a>
     </nav>
-    <span class="right">© <span id="year"></span> · <span data-i18n="footer.tag">Pečeno na Vinohradech</span></span>
+    <span class="right">© <span id="year"></span> · <span data-i18n="footer.tag">Pečeno na Vinohradech</span> · <a class="footer-link" id="privacy-open" href="#privacy" aria-haspopup="dialog" data-i18n="privacy.link">Ochrana soukromí</a></span>
   </div>
+  <p class="footer-legal" id="footer-legal" hidden></p>
 </footer>
+
+<dialog class="privacy" id="privacy" aria-labelledby="privacy-title">
+  <div class="privacy-inner">
+    <form method="dialog">
+      <button class="privacy-close" id="privacy-close" type="submit" aria-label="Zavřít">✕</button>
+    </form>
+    <h2 id="privacy-title"><em data-i18n="privacy.title.em">Ochrana</em> <span data-i18n="privacy.title">soukromí</span></h2>
+    <p data-i18n="privacy.intro">Tenhle web je jen naše vizitka. Nemá žádné formuláře, analytiku, reklamu ani sledovací cookies.</p>
+    <p data-i18n="privacy.storage"></p>
+    <p><span data-i18n="privacy.hosting"></span> <a href="https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener" data-i18n="privacy.hosting.link"></a></p>
+    <p><span data-i18n="privacy.map"></span> <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" data-i18n="privacy.map.link"></a></p>
+    <p data-i18n="privacy.contact"></p>
+    <p id="privacy-controller"></p>
+    <p><span data-i18n="privacy.complaint"></span> <a href="https://uoou.gov.cz" target="_blank" rel="noopener">uoou.gov.cz</a>.</p>
+  </div>
+</dialog>
 
 <script src="script.js"></script>
 </body>

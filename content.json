@@ -35,6 +35,13 @@
     "logo": "images/logo.jpg",
     "hero_image": "images/interier.jpg"
   },
+  "operator": {
+    "legal_name": "",
+    "registered_address": "",
+    "ico": "",
+    "dic": "",
+    "register_entry": { "cs": "", "en": "" }
+  },
   "hours": {
     "mon": "07:00-17:00",
     "tue": "07:00-17:00",
