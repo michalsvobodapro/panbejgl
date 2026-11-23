@@ -450,7 +450,8 @@ function fillTemplate(el, template, vars) {
 
 function renderMenu() {
   const grid = document.getElementById("menu-grid");
-  // Preserve which categories were open across re-renders (e.g. lang toggle)
+  const firstRender = !grid.children.length;
+  const wide = matchMedia("(min-width: 960px)").matches;
   const previouslyOpen = new Set(
     Array.from(grid.querySelectorAll(".menu-cat[open]")).map((el) => el.dataset.catIdx)
   );
@@ -459,7 +460,7 @@ function renderMenu() {
     const wrap = document.createElement("details");
     wrap.className = "menu-cat";
     wrap.dataset.catIdx = String(i);
-    if (previouslyOpen.has(String(i))) wrap.open = true;
+    wrap.open = firstRender ? wide || i === 0 : previouslyOpen.has(String(i));
 
     const head = document.createElement("summary");
     head.className = "menu-cat-head";
@@ -472,8 +473,11 @@ function renderMenu() {
     icon.className = "menu-cat-icon";
     icon.setAttribute("aria-hidden", "true");
 
-    head.appendChild(title);
-    head.appendChild(icon);
+    const count = document.createElement("span");
+    count.className = "menu-cat-count";
+    count.textContent = String(cat.items.length).padStart(2, "0");
+
+    head.append(title, count, icon);
     wrap.appendChild(head);
 
     const body = document.createElement("div");
@@ -534,7 +538,9 @@ function renderCatering() {
     const icon = document.createElement("span");
     icon.className = "menu-cat-icon";
     icon.setAttribute("aria-hidden", "true");
-    head.append(title, icon);
+    const spacer = document.createElement("span");
+    spacer.className = "menu-cat-count";
+    head.append(title, spacer, icon);
     wrap.appendChild(head);
 
     const body = document.createElement("div");
@@ -843,7 +849,6 @@ fetch("content.json")
     CONTENT = data;
     renderAll();
 
-    // Subtle fade-in on scroll for sections (runs after content is rendered)
     const io = new IntersectionObserver((entries) => {
       entries.forEach((e) => {
         if (e.isIntersecting) {
@@ -851,12 +856,14 @@ fetch("content.json")
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.08 });
+    }, { threshold: 0.05, rootMargin: "0px 0px -6% 0px" });
     document
-      .querySelectorAll(".pull, .gallery figure, .menu-cat, .hours-list li, .pane-visit")
-      .forEach((el, i) => {
+      .querySelectorAll(".pull, .gallery figure, .menu-cat, .hours-list li, .markets-list li, .pane-visit")
+      .forEach((el) => {
+        if (el.getBoundingClientRect().top < innerHeight) return;
         el.classList.add("fade-in");
-        el.style.transitionDelay = (Math.min(i, 8) * 40) + "ms";
+        const sibling = Array.prototype.indexOf.call(el.parentElement.children, el);
+        el.style.transitionDelay = (sibling % 6) * 55 + "ms";
         io.observe(el);
       });
   })
